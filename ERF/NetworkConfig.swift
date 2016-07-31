@@ -20,35 +20,35 @@ class NetworkConfig: NSObject {
     
     static let shareInstance = NetworkConfig()
     
-//    func getAndParseJson() -> NSArray {
-//        let session = NSURLSession.sharedSession()
-//        
-//        
-//        // Make the POST call and handle it in a completion handler
-//        session.dataTaskWithURL(url, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-//            // Make sure we get an OK response
-//            guard let realResponse = response as? NSHTTPURLResponse where
-//                realResponse.statusCode == 200 else {
-//                    print("Not a 200 response")
-//                    return
-//            }
-//            
-//            // Read the JSON
-//            do {
-//                if let ipString = NSString(data:data!, encoding: NSUTF8StringEncoding) {
-//                    // Print what we got from the call
-//                    print(ipString)
-//                    
-//                    // Parse the JSON to get the IP
-//                    let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
-////                    print(jsonDictionary)
-//                    
-//                }
-//            } catch {
-//                print("bad things happened")
-//            }
-//        }).resume()
-//    }
+    func getAndParseJson() -> [AnyObject] {
+        let session = NSURLSession.sharedSession()
+        var jsons: [AnyObject] = []
+        
+        // Make the POST call and handle it in a completion handler
+        session.dataTaskWithURL(url, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            // Make sure we get an OK response
+            guard let realResponse = response as? NSHTTPURLResponse where
+                realResponse.statusCode == 200 else {
+                    print("Not a 200 response")
+                    return
+            }
+            // Read the JSON
+            do {
+                if let ipString = NSString(data:data!, encoding: NSUTF8StringEncoding) {
+                    // Print what we got from the call
+                    print(ipString)
+                    
+                    // Parse the JSON to get the IP
+                    let data = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! [AnyObject]
+                    print(data)
+                    jsons = data
+                }
+            } catch {
+                print("bad things happened")
+            }
+        }).resume()
+        return jsons
+    }
     
     
     

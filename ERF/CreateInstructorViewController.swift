@@ -19,7 +19,6 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     var instructor: Instructor!
     var username = ""
     var phone = ""
-    var team = ""
     var classRoles = List<ClassRole>()
     
     var currentViewInMaskView : UIView?
@@ -73,10 +72,9 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     
     @objc
     func completeClassRoles(notification: NSNotification) -> Void {
-        team = notification.userInfo!["team"] as! String
         classRoles = notification.userInfo!["classRoles"] as! List<ClassRole>
-        print("\(team)")
-        print("\(classRoles)")
+//        print("\(team)")
+//        print("\(classRoles)")
         classRoleButton.setImage(UIImage(named: "circle-tick-7"), forState: .Normal)
     }
     
@@ -129,14 +127,15 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     }
     
     @IBAction func registerDidTapped(sender: UIButton) {
-        if username.isEmpty || team.isEmpty || phone.isEmpty || classRoles.isEmpty {
+        if username.isEmpty || phone.isEmpty || classRoles.isEmpty {
             let alert = UIAlertController(title: "Create Fail!", message: "Complete User and ClassRoles", preferredStyle: .Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alert.addAction(okAction)
             presentViewController(alert, animated: true, completion: nil)
         } else {
             NSNotificationCenter.defaultCenter().removeObserver(self, name: "Complete User", object: nil)
-            instructor = Instructor.create("image", name: username, code: "123", team: team, phone: phone, classRoles: classRoles)
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: "Complete ClassRoles", object: nil)
+            instructor = Instructor.create("image", name: username, code: "123", phone: phone, classRoles: classRoles)
         }
         
     }

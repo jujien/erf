@@ -32,10 +32,13 @@ class CreateUserInstructorView: UIView, UITextFieldDelegate{
             let object: [String: String] = ["username": username, "phone": phone]
             NSNotificationCenter.defaultCenter().postNotificationName("Complete User", object: nil, userInfo: object)
         }
-        
-        
-        usernameTextField.resignFirstResponder()
-        phoneTextField.resignFirstResponder()
+        if usernameTextField.editing && phoneTextField.text!.isEmpty {
+            usernameTextField.resignFirstResponder()
+            phoneTextField.becomeFirstResponder()
+        } else if phoneTextField.editing && usernameTextField.text!.isEmpty {
+            phoneTextField.resignFirstResponder()
+            usernameTextField.becomeFirstResponder()
+        }
     }
     
 }

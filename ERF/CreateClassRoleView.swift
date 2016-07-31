@@ -80,9 +80,14 @@ class CreateClassRoleView: UIView, UIPickerViewDelegate, UIPickerViewDataSource{
         classRole = ClassRole.create(team + cls, roleCode: role)
         classRoles.append(classRole)
         finishButton.userInteractionEnabled = true
+        let alert = UIAlertView(title: "Done Added!", message: "Add: \(team + cls) is \(role)", delegate: self, cancelButtonTitle: "OK")
+        alert.show()
     }
     
     @IBAction func finishDidTapped(sender: UIButton) {
-        NSNotificationCenter.defaultCenter().postNotificationName("Complete ClassRoles", object: nil, userInfo: ["team": team, "classRoles": classRoles])
+        addButton.userInteractionEnabled = false
+        pickerView.userInteractionEnabled = false
+        NSNotificationCenter.defaultCenter().postNotificationName("Complete ClassRoles", object: nil, userInfo: ["classRoles": classRoles])
+        sender.userInteractionEnabled = false
     }
 }

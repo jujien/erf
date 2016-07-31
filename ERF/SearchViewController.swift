@@ -19,6 +19,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         super.viewDidLoad()
         self.configureUI()
         self.getInstructor()
+        NetworkConfig.shareInstance.getAndParseJson()
     }
     
     override func viewWillAppear(animated: Bool) {

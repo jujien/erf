@@ -13,16 +13,14 @@ class Instructor: Object {
     dynamic var imageUrl = ""
     dynamic var name = ""
     dynamic var code = ""
-    dynamic var team = ""
     dynamic var phone = ""
     var classRoles : List<ClassRole> = List<ClassRole>()
     
-    class func create(imageUrl: String, name: String, code: String, team: String, phone: String, classRoles: List<ClassRole>) -> Instructor {
+    class func create(imageUrl: String, name: String, code: String, phone: String, classRoles: List<ClassRole>) -> Instructor {
         let instructor = Instructor()
         instructor.imageUrl = imageUrl
         instructor.name = name
         instructor.code = code
-        instructor.team = team
         instructor.phone = phone
         instructor.classRoles = classRoles
         return instructor
