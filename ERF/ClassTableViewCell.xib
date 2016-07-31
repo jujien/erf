@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ClassTableViewCell" customModule="ERF" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-circle" translatesAutoresizingMaskIntoConstraints="NO" id="3AJ-QO-ENY">
+                        <rect key="frame" x="16" y="16" width="12" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="3AJ-QO-ENY" secondAttribute="height" multiplier="1:1" id="Lew-7O-GTV"/>
+                            <constraint firstAttribute="width" constant="12" id="SJv-aw-bSc"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UA7-sq-JkR">
+                        <rect key="frame" x="48" y="0.0" width="272" height="43"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="UA7-sq-JkR" firstAttribute="leading" secondItem="3AJ-QO-ENY" secondAttribute="trailing" constant="20" id="0y1-a1-2aX"/>
+                    <constraint firstItem="3AJ-QO-ENY" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="EwJ-rB-gah"/>
+                    <constraint firstItem="UA7-sq-JkR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="e7O-pn-sLX"/>
+                    <constraint firstItem="3AJ-QO-ENY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="g49-5g-a45"/>
+                    <constraint firstAttribute="trailing" secondItem="UA7-sq-JkR" secondAttribute="trailing" id="si2-tX-HUm"/>
+                    <constraint firstAttribute="bottom" secondItem="UA7-sq-JkR" secondAttribute="bottom" id="xl1-3v-Rao"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="classLabel" destination="UA7-sq-JkR" id="Qz8-4G-RkI"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="img-circle" width="24" height="24"/>
+    </resources>
+</document>

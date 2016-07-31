@@ -1,0 +1,23 @@
+PODS:
+  - CVCalendar (1.2.9)
+  - Realm (1.0.1):
+    - Realm/Headers (= 1.0.1)
+  - Realm/Headers (1.0.1)
+  - RealmSwift (1.0.1):
+    - Realm (= 1.0.1)
+  - SlideMenuControllerSwift (2.2.0)
+
+DEPENDENCIES:
+  - CVCalendar
+  - RealmSwift
+  - SlideMenuControllerSwift
+
+SPEC CHECKSUMS:
+  CVCalendar: 0799256e0bc3b43e83b7e86c0729ce9ff0624cb6
+  Realm: 2e15e39d35b08abb529e212ed5d8af107b5236c8
+  RealmSwift: d73ea2af08c3676dbdd5e4b669651a0f492162a4
+  SlideMenuControllerSwift: 16dac00b1aaad153e64fffb5d6969ab31ad88372
+
+PODFILE CHECKSUM: 51aa1d41e8edaa55ce1cdce0bfb457f7c63331ce
+
+COCOAPODS: 1.0.1
