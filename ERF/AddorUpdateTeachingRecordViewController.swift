@@ -32,11 +32,13 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
         instructorView.instructor = instructor
         loadClass()
         chooseStep()
-        nextStep()
         for recognizer in self.view.gestureRecognizers ?? [] {
             self.view.removeGestureRecognizer(recognizer)
         }
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(classSelector), name: "Class Selector", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(roleSelector), name: "Role Selector", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(dateSelector), name: "Date Selector", object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -47,12 +49,8 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
         super.viewDidAppear(animated)
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
+    //MARK: change view
     func nextStep() -> Void {
         if classSelected != "" {
             loadRole()
@@ -85,6 +83,28 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
         instructorView.dateButton.addTarget(self, action: #selector(dateDidTapped), forControlEvents: .TouchUpInside)
     }
     
+    
+    //MARK: method observer
+    @objc
+    func classSelector(notification: NSNotification) -> Void {
+        classSelected = notification.userInfo!["classSelected"] as! String
+        nextStep()
+    }
+    
+    @objc
+    func roleSelector(notification: NSNotification) -> Void {
+        roleSelected = notification.userInfo!["roleSelected"] as! String
+        nextStep()
+    }
+    
+    @objc
+    func dateSelector(notification: NSNotification) ->Void {
+        timeSelected = notification.userInfo!["time"] as! String
+        submitSelected = notification.userInfo!["submitFlag"] as! String
+        nextStep()
+    }
+    
+    //MARK: method target
     @objc
     func classDidTapped (sender: UIButton) {
         loadClass()
@@ -103,6 +123,7 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
         configButtonColor(sender, otherButton1: instructorView.roleButton, otherButton2: instructorView.classButton)
     }
     
+    //configure button
     func configButtonColor(selectedButton : UIButton, otherButton1 : UIButton, otherButton2 : UIButton) {
         selectedButton.backgroundColor = UIColor(netHex: 0x04BF25)
         if otherButton1.userInteractionEnabled {
@@ -118,6 +139,7 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
         }
     }
     
+    //MARK: loadView
     func loadClass() -> Void {
         let viewClass = NSBundle.mainBundle().loadNibNamed("ClassSelectorView", owner: self, options: nil)[0] as! ClassSelectorView
         viewClass.instructor = instructor

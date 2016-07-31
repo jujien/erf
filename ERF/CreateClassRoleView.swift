@@ -55,8 +55,7 @@ class CreateClassRoleView: UIView, UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        //let font = UIFont(name: "Helvetica Neue", size: 15)!
-        let attributes: [String: AnyObject] = [NSFontAttributeName: UIFont(name: "Helvetica Neue", size: 15)!, NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let attributes: [String: AnyObject] = [NSFontAttributeName: UIFont(name: "Helvetica Neue", size: 15)!, NSForegroundColorAttributeName: UIColor.blackColor()]
         if component == 0 {
             return NSAttributedString(string: teams[row], attributes: attributes)
         } else if component == 1 {
@@ -74,21 +73,16 @@ class CreateClassRoleView: UIView, UIPickerViewDelegate, UIPickerViewDataSource{
         }
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if component == 0 {
-            team = teams[row]
-        } else if component == 1 {
-            cls = "\(row)"
-        } else {
-            role = roles[row]
-        }
-        classRole = ClassRole.create(team + cls, roleCode: role)
-    }
-    
     @IBAction func addDidTapped(sender: UIButton) {
+        team = teams[pickerView.selectedRowInComponent(0)]
+        cls = "\(pickerView.selectedRowInComponent(1))"
+        role = roles[pickerView.selectedRowInComponent(2)]
+        classRole = ClassRole.create(team + cls, roleCode: role)
         classRoles.append(classRole)
+        finishButton.userInteractionEnabled = true
     }
     
     @IBAction func finishDidTapped(sender: UIButton) {
+        NSNotificationCenter.defaultCenter().postNotificationName("Complete ClassRoles", object: nil, userInfo: ["team": team, "classRoles": classRoles])
     }
 }

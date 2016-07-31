@@ -55,6 +55,7 @@ class ClassSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         classSelected = classData[indexPath.row]
+        NSNotificationCenter.defaultCenter().postNotificationName("Class Selector", object: nil, userInfo: ["classSelected": classSelected])
     }
 
 }

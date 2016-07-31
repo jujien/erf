@@ -16,7 +16,6 @@
 		E14BDFC51D47A41100C92AD5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BDFC41D47A41100C92AD5 /* LoginViewController.swift */; };
 		E14BDFCA1D47ACF800C92AD5 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BDFC91D47ACF800C92AD5 /* MenuTableViewCell.swift */; };
 		E14BDFCC1D47AD7900C92AD5 /* LeftMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BDFCB1D47AD7900C92AD5 /* LeftMenuItem.swift */; };
-		E14BDFD01D47BB5700C92AD5 /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BDFCF1D47BB5700C92AD5 /* HistoryTableViewController.swift */; };
 		E14BDFD41D47CEEE00C92AD5 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BDFD31D47CEEE00C92AD5 /* SearchViewController.swift */; };
 		E14E82501D48D2FC0017C9D5 /* InstructorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14E824F1D48D2FC0017C9D5 /* InstructorCollectionViewCell.swift */; };
 		E14E82521D48FD770017C9D5 /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14E82511D48FD770017C9D5 /* Role.swift */; };
@@ -46,6 +45,7 @@
 		E15054BA1D4A07D600907217 /* CreateClassRoleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E15054B91D4A07D600907217 /* CreateClassRoleView.xib */; };
 		E15054BD1D4A14BB00907217 /* CreateUserInstructorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15054BC1D4A14BB00907217 /* CreateUserInstructorView.swift */; };
 		E15054BF1D4A22AF00907217 /* CreateClassRoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15054BE1D4A22AF00907217 /* CreateClassRoleView.swift */; };
+		E187CF011D4DF73800A5949C /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187CF001D4DF73800A5949C /* UIViewControllerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,7 +62,6 @@
 		E14BDFC41D47A41100C92AD5 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E14BDFC91D47ACF800C92AD5 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		E14BDFCB1D47AD7900C92AD5 /* LeftMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuItem.swift; sourceTree = "<group>"; };
-		E14BDFCF1D47BB5700C92AD5 /* HistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		E14BDFD31D47CEEE00C92AD5 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		E14E824F1D48D2FC0017C9D5 /* InstructorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructorCollectionViewCell.swift; sourceTree = "<group>"; };
 		E14E82511D48FD770017C9D5 /* Role.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
@@ -92,6 +91,7 @@
 		E15054B91D4A07D600907217 /* CreateClassRoleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateClassRoleView.xib; sourceTree = "<group>"; };
 		E15054BC1D4A14BB00907217 /* CreateUserInstructorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserInstructorView.swift; sourceTree = "<group>"; };
 		E15054BE1D4A22AF00907217 /* CreateClassRoleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateClassRoleView.swift; sourceTree = "<group>"; };
+		E187CF001D4DF73800A5949C /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,7 +145,6 @@
 				E14BDFC41D47A41100C92AD5 /* LoginViewController.swift */,
 				E15054B21D49DE3700907217 /* MenuController */,
 				E15054B31D49DE6B00907217 /* SearchController */,
-				E14BDFCF1D47BB5700C92AD5 /* HistoryTableViewController.swift */,
 				E15054B41D49DE8A00907217 /* Add or Update Controller */,
 			);
 			name = Controller;
@@ -186,6 +185,7 @@
 		E14E825D1D49069B0017C9D5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				E187CF001D4DF73800A5949C /* UIViewControllerExtension.swift */,
 				E15054A81D49BFD500907217 /* UIColorExtension.swift */,
 				E14E82701D491FA10017C9D5 /* UIIViewExtensions.swift */,
 				E14E825E1D4906B90017C9D5 /* NSDateExtensions.swift */,
@@ -396,7 +396,7 @@
 				E14E826F1D491BFE0017C9D5 /* InstructorDetailView.swift in Sources */,
 				E14E82711D491FA10017C9D5 /* UIIViewExtensions.swift in Sources */,
 				E14E825A1D4904B40017C9D5 /* TeachingRecord.swift in Sources */,
-				E14BDFD01D47BB5700C92AD5 /* HistoryTableViewController.swift in Sources */,
+				E187CF011D4DF73800A5949C /* UIViewControllerExtension.swift in Sources */,
 				E14E825C1D4905D20017C9D5 /* TeachingRecordGroup.swift in Sources */,
 				E14BDFCA1D47ACF800C92AD5 /* MenuTableViewCell.swift in Sources */,
 				E15054A91D49BFD500907217 /* UIColorExtension.swift in Sources */,

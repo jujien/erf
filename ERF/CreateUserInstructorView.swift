@@ -20,19 +20,20 @@ class CreateUserInstructorView: UIView, UITextFieldDelegate{
     override func awakeFromNib() {
         usernameTextField.delegate = self
         phoneTextField.delegate = self
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        done()
+        usernameTextField.text = username
+        phoneTextField.text = phone
+        
     }
     
     @IBAction func done() {
-        if let username = usernameTextField.text where !username.isEmpty {
+        if let username = usernameTextField.text where !username.isEmpty, let phone = phoneTextField.text where !phone.isEmpty {
             self.username = username
-        }
-        if let phone = phoneTextField.text where !phone.isEmpty {
             self.phone = phone
+            let object: [String: String] = ["username": username, "phone": phone]
+            NSNotificationCenter.defaultCenter().postNotificationName("Complete User", object: nil, userInfo: object)
         }
+        
+        
         usernameTextField.resignFirstResponder()
         phoneTextField.resignFirstResponder()
     }

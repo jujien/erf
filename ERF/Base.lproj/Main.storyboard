@@ -46,7 +46,10 @@
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="User Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dFa-FW-SpY">
                                                 <rect key="frame" x="41" y="8" width="519" height="35"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <action selector="done" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="4u0-Hn-Aj8"/>
+                                                </connections>
                                             </textField>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LwT-3l-BV8">
                                                 <rect key="frame" x="0.0" y="48" width="568" height="2"/>
@@ -82,7 +85,10 @@
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d4t-fy-i5T">
                                                 <rect key="frame" x="41" y="8" width="519" height="35"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                                <connections>
+                                                    <action selector="done" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="L5t-Vc-VOE"/>
+                                                </connections>
                                             </textField>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HtW-gO-eKJ">
                                                 <rect key="frame" x="0.0" y="48" width="568" height="2"/>
@@ -308,7 +314,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RoI-oN-hlC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="995" y="1000"/>
+            <point key="canvasLocation" x="992" y="1000"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="34r-o7-o6q">
@@ -494,35 +500,6 @@
             </objects>
             <point key="canvasLocation" x="2533" y="1000"/>
         </scene>
-        <!--History-->
-        <scene sceneID="AzN-hu-kX2">
-            <objects>
-                <tableViewController id="EAT-xH-heu" customClass="HistoryTableViewController" customModule="ERF" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="09U-mU-rgF">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="owc-no-r6C">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="owc-no-r6C" id="bkX-xb-q3h">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="EAT-xH-heu" id="g1E-dl-hH7"/>
-                            <outlet property="delegate" destination="EAT-xH-heu" id="cfW-Zk-gI9"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="History" id="sch-WB-TdU"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ra7-F9-eca" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1815" y="1685"/>
-        </scene>
         <!--Create Instructor View Controller-->
         <scene sceneID="Xdc-2F-hGd">
             <objects>
@@ -660,7 +637,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iub-KF-gSY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1815" y="2383"/>
+            <point key="canvasLocation" x="1815" y="1685"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4By-2o-q4C">
@@ -676,23 +653,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ExL-Xf-DLe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="995" y="2383"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="zCy-XP-QrV">
-            <objects>
-                <navigationController storyboardIdentifier="NavigationHistory" id="HSi-GW-5QI" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="o5i-Rd-CaI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="EAT-xH-heu" kind="relationship" relationship="rootViewController" id="8HX-oe-m6k"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3oz-SU-svW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="995" y="1685"/>
+            <point key="canvasLocation" x="992" y="1685"/>
         </scene>
     </scenes>
     <resources>

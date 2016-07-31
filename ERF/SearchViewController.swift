@@ -26,16 +26,12 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.closeLeft()
         instructorCollectionView.reloadData()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     func getInstructor() -> Void {
         //lay du lieu
     }
     
+    //MARK: -configure UI and Layout
     func configureUI() -> Void {
         self.navigationItem.title = "INSTRUCTOR LIST"
         self.searchBar.backgroundColor = UIColor.clearColor()
@@ -64,6 +60,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.addLeftBarButtonWithImage(UIImage(named: "img-menu")!)
     }
     
+    // MARK: UICollectionViewDataSource
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -79,6 +76,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         return cell
     }
     
+    // MARK: UICollectionViewDelegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let instructor = instructors[indexPath.row]
         let instructorDetail = self.storyboard?.instantiateViewControllerWithIdentifier("AddorUpdateTeachingRecordViewController") as! AddorUpdateTeachingRecordViewController

@@ -23,7 +23,6 @@ class LeftMenuItem {
         get {
             return [
                LeftMenuItem(icon: "img-search", title: "SEARCH INSTRUCTOR", idViewController: "NavigationSearch"),
-               LeftMenuItem(icon: "img-history", title: "HISTORY", idViewController: "NavigationHistory"),
                LeftMenuItem(icon: "camera-7", title: "CREATE", idViewController: "NavigationCreate"),
                LeftMenuItem(icon: "img-logout", title: "LOGOUT", idViewController: "")
             ]

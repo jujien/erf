@@ -55,5 +55,6 @@ class RoleSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         roleSelected = roleData[indexPath.row]
+        NSNotificationCenter.defaultCenter().postNotificationName("Role Selector", object: nil, userInfo: ["roleSelected": roleSelected])
     }
 }

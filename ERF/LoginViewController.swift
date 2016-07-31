@@ -53,5 +53,13 @@ class LoginViewController: UIViewController {
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }
+    
+    @IBAction func done() {
+        usernameTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        
+    }
+    
+    
 
 }

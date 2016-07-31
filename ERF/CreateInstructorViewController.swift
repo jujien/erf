@@ -25,14 +25,23 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     var currentViewInMaskView : UIView?
     var imagePicker: UIImagePickerController!
     var image: UIImage!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        classRoleButton.userInteractionEnabled = false
         loadCreateUser()
-        nextStep()
         tapImage()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeClassRoles), name: "Complete ClassRoles", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeUser), name: "Complete User", object: nil)
         
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        configureUI()
+    }
+    
+    //MARK: choose or take photo
     func tapImage() -> Void {
         let tap = UITapGestureRecognizer(target: self, action: #selector(takePhoto))
         tap.numberOfTapsRequired = 1
@@ -54,11 +63,24 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        configureUI()
+    //MARK: method observer
+    @objc
+    func completeUser(notification: NSNotification) -> Void {
+        username = notification.userInfo!["username"] as! String
+        phone = notification.userInfo!["phone"] as! String
+        nextStep()
     }
     
+    @objc
+    func completeClassRoles(notification: NSNotification) -> Void {
+        team = notification.userInfo!["team"] as! String
+        classRoles = notification.userInfo!["classRoles"] as! List<ClassRole>
+        print("\(team)")
+        print("\(classRoles)")
+        classRoleButton.setImage(UIImage(named: "circle-tick-7"), forState: .Normal)
+    }
+    
+    //ConfigureUI
     func configureUI() -> Void {
         self.navigationItem.title = "CREATE INSTRUCTOR"
         avatarImageView.layer.masksToBounds = true
@@ -73,11 +95,12 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
         self.addLeftBarButtonWithImage(UIImage(named: "img-menu")!)
     }
     
+    //MARK: Load View
     func loadCreateUser() -> Void {
         let userView = NSBundle.mainBundle().loadNibNamed("CreateUserInstructorView", owner: self, options: nil)[0] as! CreateUserInstructorView
         userView.frame = maskView.bounds
-        userView.phone = phone
         userView.username = username
+        userView.phone = phone
         addSubViewToSuperView(userView)
         
     }
@@ -85,8 +108,6 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     func loadCreateClassRole() -> Void {
         let classRoleView = NSBundle.mainBundle().loadNibNamed("CreateClassRoleView", owner: self, options: nil)[0] as! CreateClassRoleView
         classRoleView.frame = maskView.bounds
-        classRoleView.team = team
-        classRoleView.classRoles = classRoles
         addSubViewToSuperView(classRoleView)
     }
     
@@ -98,16 +119,26 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
         currentViewInMaskView = subView
     }
     
+    //Change View
     func nextStep() -> Void {
         if !username.isEmpty && !phone.isEmpty {
             loadCreateClassRole()
             userButton.setImage(UIImage(named: "circle-tick-7"), forState: .Normal)
+            classRoleButton.userInteractionEnabled = true
         }
     }
     
-    
     @IBAction func registerDidTapped(sender: UIButton) {
-        instructor = Instructor.create("image", name: username, code: "123", team: team, phone: phone, classRoles: classRoles)
+        if username.isEmpty || team.isEmpty || phone.isEmpty || classRoles.isEmpty {
+            let alert = UIAlertController(title: "Create Fail!", message: "Complete User and ClassRoles", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alert.addAction(okAction)
+            presentViewController(alert, animated: true, completion: nil)
+        } else {
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: "Complete User", object: nil)
+            instructor = Instructor.create("image", name: username, code: "123", team: team, phone: phone, classRoles: classRoles)
+        }
+        
     }
 
     @IBAction func userDidTapped(sender: UIButton) {
@@ -118,6 +149,7 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
         loadCreateClassRole()
     }
     
+    //MARK: PickerDelegate
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
