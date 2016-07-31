@@ -1,4 +1,19 @@
 PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
   - CVCalendar (1.2.9)
   - Realm (1.0.1):
     - Realm/Headers (= 1.0.1)
@@ -6,18 +21,23 @@ PODS:
   - RealmSwift (1.0.1):
     - Realm (= 1.0.1)
   - SlideMenuControllerSwift (2.2.0)
+  - Socket.IO-Client-Swift (6.1.4)
 
 DEPENDENCIES:
+  - AFNetworking
   - CVCalendar
   - RealmSwift
   - SlideMenuControllerSwift
+  - Socket.IO-Client-Swift
 
 SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   CVCalendar: 0799256e0bc3b43e83b7e86c0729ce9ff0624cb6
   Realm: 2e15e39d35b08abb529e212ed5d8af107b5236c8
   RealmSwift: d73ea2af08c3676dbdd5e4b669651a0f492162a4
   SlideMenuControllerSwift: 16dac00b1aaad153e64fffb5d6969ab31ad88372
+  Socket.IO-Client-Swift: 79dfbbe170d7816c84e2d3cc2baa3d227549e067
 
-PODFILE CHECKSUM: 51aa1d41e8edaa55ce1cdce0bfb457f7c63331ce
+PODFILE CHECKSUM: 3b9dda9ecbac29a30334ed715788cfe40046362b
 
 COCOAPODS: 1.0.1

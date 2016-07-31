@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		92663646187045ECD2931B07 /* Pods_ERF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF2C3AA4B9B18958D2ECE16B /* Pods_ERF.framework */; };
+		BF210B8C1D4E2A4B00D55A77 /* NetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF210B8B1D4E2A4B00D55A77 /* NetworkConfig.swift */; };
 		E14BDFB11D477A4F00C92AD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BDFB01D477A4F00C92AD5 /* AppDelegate.swift */; };
 		E14BDFB61D477A5000C92AD5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E14BDFB41D477A5000C92AD5 /* Main.storyboard */; };
 		E14BDFB81D477A5000C92AD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E14BDFB71D477A5000C92AD5 /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 /* Begin PBXFileReference section */
 		4610CD7446FB21D1B28387DB /* Pods-ERF.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ERF.release.xcconfig"; path = "Pods/Target Support Files/Pods-ERF/Pods-ERF.release.xcconfig"; sourceTree = "<group>"; };
 		7204CE7BC86BC56032173DB1 /* Pods-ERF.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ERF.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ERF/Pods-ERF.debug.xcconfig"; sourceTree = "<group>"; };
+		BF210B8B1D4E2A4B00D55A77 /* NetworkConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
 		BF2C3AA4B9B18958D2ECE16B /* Pods_ERF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ERF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E14BDFAD1D477A4D00C92AD5 /* ERF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ERF.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E14BDFB01D477A4F00C92AD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				E14E82511D48FD770017C9D5 /* Role.swift */,
 				E14E82601D4909010017C9D5 /* Database.swift */,
 				E14E82621D4909800017C9D5 /* User.swift */,
+				BF210B8B1D4E2A4B00D55A77 /* NetworkConfig.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				E14BDFCC1D47AD7900C92AD5 /* LeftMenuItem.swift in Sources */,
 				E14E82541D4901570017C9D5 /* Class.swift in Sources */,
 				E14BDFC51D47A41100C92AD5 /* LoginViewController.swift in Sources */,
+				BF210B8C1D4E2A4B00D55A77 /* NetworkConfig.swift in Sources */,
 				E14BDFD41D47CEEE00C92AD5 /* SearchViewController.swift in Sources */,
 				E14BDFC31D4789D000C92AD5 /* LeftViewController.swift in Sources */,
 				E14E82501D48D2FC0017C9D5 /* InstructorCollectionViewCell.swift in Sources */,
