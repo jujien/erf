@@ -47,6 +47,7 @@
 		E15054BD1D4A14BB00907217 /* CreateUserInstructorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15054BC1D4A14BB00907217 /* CreateUserInstructorView.swift */; };
 		E15054BF1D4A22AF00907217 /* CreateClassRoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15054BE1D4A22AF00907217 /* CreateClassRoleView.swift */; };
 		E187CF011D4DF73800A5949C /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187CF001D4DF73800A5949C /* UIViewControllerExtension.swift */; };
+		E1E43A9D1D4EFCC70012BEA4 /* LazyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E43A9C1D4EFCC70012BEA4 /* LazyImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		E15054BC1D4A14BB00907217 /* CreateUserInstructorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserInstructorView.swift; sourceTree = "<group>"; };
 		E15054BE1D4A22AF00907217 /* CreateClassRoleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateClassRoleView.swift; sourceTree = "<group>"; };
 		E187CF001D4DF73800A5949C /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		E1E43A9C1D4EFCC70012BEA4 /* LazyImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LazyImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				E14BDFC61D47ACBB00C92AD5 /* Controller */,
 				E15054BB1D4A148900907217 /* Create Controller */,
 				E14BDFB71D477A5000C92AD5 /* Assets.xcassets */,
+				E1F673321D4E72CD00FFC123 /* Networking */,
 				E14E825D1D49069B0017C9D5 /* Utils */,
 				E14BDFBC1D477A5000C92AD5 /* Info.plist */,
 			);
@@ -180,7 +183,6 @@
 				E14E82511D48FD770017C9D5 /* Role.swift */,
 				E14E82601D4909010017C9D5 /* Database.swift */,
 				E14E82621D4909800017C9D5 /* User.swift */,
-				BF210B8B1D4E2A4B00D55A77 /* NetworkConfig.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -188,6 +190,7 @@
 		E14E825D1D49069B0017C9D5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				E1E43A9C1D4EFCC70012BEA4 /* LazyImage.swift */,
 				E187CF001D4DF73800A5949C /* UIViewControllerExtension.swift */,
 				E15054A81D49BFD500907217 /* UIColorExtension.swift */,
 				E14E82701D491FA10017C9D5 /* UIIViewExtensions.swift */,
@@ -235,6 +238,14 @@
 				E15054BE1D4A22AF00907217 /* CreateClassRoleView.swift */,
 			);
 			name = "Create Controller";
+			sourceTree = "<group>";
+		};
+		E1F673321D4E72CD00FFC123 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				BF210B8B1D4E2A4B00D55A77 /* NetworkConfig.swift */,
+			);
+			name = Networking;
 			sourceTree = "<group>";
 		};
 		E89860AA571B1CEFD8021868 /* Frameworks */ = {
@@ -389,6 +400,7 @@
 				E14E827D1D4929300017C9D5 /* DateSelectorView.swift in Sources */,
 				E15054BF1D4A22AF00907217 /* CreateClassRoleView.swift in Sources */,
 				E14BDFCC1D47AD7900C92AD5 /* LeftMenuItem.swift in Sources */,
+				E1E43A9D1D4EFCC70012BEA4 /* LazyImage.swift in Sources */,
 				E14E82541D4901570017C9D5 /* Class.swift in Sources */,
 				E14BDFC51D47A41100C92AD5 /* LoginViewController.swift in Sources */,
 				BF210B8C1D4E2A4B00D55A77 /* NetworkConfig.swift in Sources */,

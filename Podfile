@@ -9,6 +9,7 @@ target 'ERF' do
   pod 'SlideMenuControllerSwift'
   pod 'RealmSwift'
   pod 'CVCalendar'
-	pod ‘Socket.IO-Client-Swift’
-pod 'AFNetworking'
+  pod 'Socket.IO-Client-Swift'
+  pod 'AFNetworking'
+  pod 'ReachabilitySwift'
 end

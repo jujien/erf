@@ -20,10 +20,9 @@ class NetworkConfig: NSObject {
     
     static let shareInstance = NetworkConfig()
     
-    func getAndParseJson() -> [AnyObject] {
+    func getAndParseJson() -> Void {
         let session = NSURLSession.sharedSession()
-        var jsons: [AnyObject] = []
-        
+
         // Make the POST call and handle it in a completion handler
         session.dataTaskWithURL(url, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             // Make sure we get an OK response
@@ -41,13 +40,11 @@ class NetworkConfig: NSObject {
                     // Parse the JSON to get the IP
                     let data = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! [AnyObject]
                     print(data)
-                    jsons = data
                 }
-            } catch {
-                print("bad things happened")
+            } catch let error {
+                print("\(error)")
             }
         }).resume()
-        return jsons
     }
     
     
@@ -66,8 +63,8 @@ class NetworkConfig: NSObject {
         do {
             request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(postParams, options: NSJSONWritingOptions())
             print(postParams)
-        } catch {
-            print("bad things happened")
+        } catch let error {
+            print("\(error)")
         }
         
         // Make the POST call and handle it in a completion handler

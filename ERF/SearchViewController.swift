@@ -7,19 +7,22 @@
 //
 
 import UIKit
+import RealmSwift
+import ReachabilitySwift
 
-class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
-    @IBOutlet weak var searchView: UIView!
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var instructorCollectionView: UICollectionView!
+    @IBOutlet weak var waitIndicatorView: UIActivityIndicatorView!
     
     var instructors: [Instructor] = [Instructor]()
+    //var reachability : Reachability?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUI()
         self.getInstructor()
-        NetworkConfig.shareInstance.getAndParseJson()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -30,12 +33,51 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func getInstructor() -> Void {
         //lay du lieu
+//        do {
+//            reachability = try! Reachability.reachabilityForInternetConnection()
+//        }
+//        reachability!.whenReachable = {
+//            reachability in
+//            dispatch_async(dispatch_get_main_queue(), {
+//                
+//            })
+//        }
+//        
+//        reachability!.whenUnreachable = {
+//            reachability in
+//            dispatch_async(dispatch_get_main_queue(), {
+//                //self.instructorCollectionView.reloadData()
+//                self.waitIndicatorView.stopAnimating()
+//            })
+//        }
+        //try! reachability?.startNotifier()
+//        NetworkConfig.shareInstance.getAndParseJson { (data) in
+//            let objects = data
+//            for object in objects {
+//                let instructor = object as! [String: AnyObject]
+//                let code = "TECH 10"
+//                let name = instructor["name"] as! String
+//                let phone = instructor["phone"] as! Int
+//                let imageUrl = instructor["imageURL"] as! String
+//                let cls = (instructor["class"] as! [AnyObject])[0] as! [String: String]
+//                let classRole = ClassRole.create(cls["nameClass"]!, roleCode: cls["classRole"]!)
+//                let classRoles = List<ClassRole>()
+//                classRoles.append(classRole)
+//                self.instructors.append(Instructor.create(imageUrl, name: name, code: code, phone: "\(phone)", classRoles: classRoles))
+//            }
+//            self.instructorCollectionView.reloadData()
+//            self.waitIndicatorView.stopAnimating()
+//        }
+        
     }
     
     //MARK: -configure UI and Layout
     func configureUI() -> Void {
         self.navigationItem.title = "INSTRUCTOR LIST"
-        self.searchBar.backgroundColor = UIColor.clearColor()
+        self.waitIndicatorView.hidesWhenStopped = true
+        self.waitIndicatorView.activityIndicatorViewStyle = .White
+        self.waitIndicatorView.center = instructorCollectionView.center
+        self.waitIndicatorView.startAnimating()
         self.navigationController?.navigationBar.translucent = false
         for parent in self.navigationController!.navigationBar.subviews {
             for childView in parent.subviews {
@@ -48,16 +90,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func configureLayout() -> Void {
-        instructorCollectionView.backgroundColor = UIColor.whiteColor()
-        instructorCollectionView.backgroundView?.backgroundColor = UIColor.whiteColor()
         self.view.layoutIfNeeded()
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        let width = (self.view.frame.width - 25)/2
-        layout.itemSize = CGSize(width:  width, height: 3*width/2)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 8
-        instructorCollectionView.setCollectionViewLayout(layout, animated: true)
         self.addLeftBarButtonWithImage(UIImage(named: "img-menu")!)
     }
     
@@ -85,6 +118,20 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationController?.pushViewController(instructorDetail, animated: true)
     }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let width = (self.view.frame.width - 25.0)/2.0
+        return CGSize(width:  width, height: 3.0*width/2.0)
+    }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 8.0
+    }
 
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0
+    }
 }

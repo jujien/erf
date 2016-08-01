@@ -56,8 +56,7 @@ class InstructorDetailView: UIView {
     }
     
     func viewInstructorInfo() -> Void {
-        let data = NSData(contentsOfURL: NSURL(string: (instructor?.imageUrl)!)!)
-        avatarImage.image = UIImage(data: data!)
+        LazyImage.showForImageView(avatarImage, url: instructor?.imageUrl)
         nameLabel.text = instructor?.name
         phoneLabel.text = instructor?.phone
     }

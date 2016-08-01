@@ -30,8 +30,7 @@ class InstructorCollectionViewCell: UICollectionViewCell {
         
         nameLabel.text = "\(instructor!.name)"
         codeLabel.text = "\(instructor!.code)"
-        let data = NSData(contentsOfURL: NSURL(string: (instructor?.imageUrl)!)!)
-        avatarImageView.image = UIImage(data: data!)
+        LazyImage.showForImageView(avatarImageView, url: instructor?.imageUrl)
         
     }
 }
