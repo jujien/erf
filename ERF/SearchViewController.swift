@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import ReachabilitySwift
+import Alamofire
 
 class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
@@ -16,7 +17,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var waitIndicatorView: UIActivityIndicatorView!
     
     var instructors: [Instructor] = [Instructor]()
-    //var reachability : Reachability?
+    var reachability : Reachability?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,40 +34,45 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func getInstructor() -> Void {
         //lay du lieu
-//        do {
-//            reachability = try! Reachability.reachabilityForInternetConnection()
-//        }
-//        reachability!.whenReachable = {
-//            reachability in
-//            dispatch_async(dispatch_get_main_queue(), {
-//                
-//            })
-//        }
-//        
-//        reachability!.whenUnreachable = {
-//            reachability in
-//            dispatch_async(dispatch_get_main_queue(), {
-//                //self.instructorCollectionView.reloadData()
-//                self.waitIndicatorView.stopAnimating()
-//            })
-//        }
-        //try! reachability?.startNotifier()
+        do {
+            reachability = try! Reachability.reachabilityForInternetConnection()
+        }
+        reachability!.whenReachable = {
+            reachability in
+            dispatch_async(dispatch_get_main_queue(), {
+                Alamofire.request(.GET, "https://dataforiliat.herokuapp.com/api/products").validate().responseJSON(completionHandler: { (response) in
+                    print(response.result.value)
+                    if let json = response.result.value {
+                        for object in json as! [AnyObject] {
+                            let instructor = object as! [String: AnyObject]
+                            let code = "TECH 10"
+                            let name = instructor["name"] as! String
+                            let phone = instructor["phone"] as! Int
+                            let imageUrl = instructor["imageURL"] as! String
+                            let cls = (instructor["class"] as! [AnyObject])[0] as! [String: String]
+                            let classRole = ClassRole.create(cls["nameClass"]!, roleCode: cls["classRole"]!)
+                            let classRoles = List<ClassRole>()
+                            classRoles.append(classRole)
+                            self.instructors.append(Instructor.create(imageUrl, name: name, code: code, phone: "\(phone)", classRoles: classRoles))
+                        }
+                        self.instructorCollectionView.reloadData()
+                        self.waitIndicatorView.stopAnimating()
+                    }
+                })
+            })
+        }
+        
+        reachability!.whenUnreachable = {
+            reachability in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.instructorCollectionView.reloadData()
+                self.waitIndicatorView.stopAnimating()
+            })
+        }
+        try! reachability?.startNotifier()
 //        NetworkConfig.shareInstance.getAndParseJson { (data) in
 //            let objects = data
-//            for object in objects {
-//                let instructor = object as! [String: AnyObject]
-//                let code = "TECH 10"
-//                let name = instructor["name"] as! String
-//                let phone = instructor["phone"] as! Int
-//                let imageUrl = instructor["imageURL"] as! String
-//                let cls = (instructor["class"] as! [AnyObject])[0] as! [String: String]
-//                let classRole = ClassRole.create(cls["nameClass"]!, roleCode: cls["classRole"]!)
-//                let classRoles = List<ClassRole>()
-//                classRoles.append(classRole)
-//                self.instructors.append(Instructor.create(imageUrl, name: name, code: code, phone: "\(phone)", classRoles: classRoles))
-//            }
-//            self.instructorCollectionView.reloadData()
-//            self.waitIndicatorView.stopAnimating()
+
 //        }
         
     }

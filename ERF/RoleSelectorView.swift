@@ -27,7 +27,7 @@ class RoleSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func layout() -> Void {
-        //roleData = instructor.roleInClass(classCode)
+        roleData = instructor.roleInClass(classCode)
     }
     
     // MARK: - Table view data source
@@ -55,6 +55,6 @@ class RoleSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         roleSelected = roleData[indexPath.row]
-        NSNotificationCenter.defaultCenter().postNotificationName("Role Selector", object: nil, userInfo: ["roleSelected": roleSelected])
+        NSNotificationCenter.defaultCenter().postNotificationName("Selector", object: nil, userInfo: ["Selected": "role", "roleSelected": roleSelected])
     }
 }

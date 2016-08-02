@@ -28,14 +28,13 @@ class InstructorDetailView: UIView {
             self.viewInstructorInfo()
         }
     }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        let viewInfo = NSBundle.mainBundle().loadNibNamed("InstructorInfo", owner: self, options: nil)[0] as! UIView
-        self.layoutIfNeeded()
-        viewInfo.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
-        self.addSubview(viewInfo)
-        
+    
+    override func awakeFromNib() {
+//        let viewInfo = NSBundle.mainBundle().loadNibNamed("InstructorInfoView", owner: self, options: nil)[0] as! UIView
+//        self.layoutIfNeeded()
+//        viewInfo.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
+//        self.addSubview(viewInfo)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(selected), name: "Selected", object: nil)
     }
     
     override func layoutSubviews() {
@@ -68,4 +67,57 @@ class InstructorDetailView: UIView {
             UIApplication.sharedApplication().openURL(url)
         }
     }
+    
+    @IBAction func classDidTapped(sender: UIButton) {
+        configButtonColor(sender, otherButton1: roleButton, otherButton2: dateButton)
+        NSNotificationCenter.defaultCenter().postNotificationName("DidTapped", object: nil, userInfo: ["DidTapped": "class"])
+    }
+    
+    @IBAction func roleDidTapped(sender: UIButton) {
+        configButtonColor(sender, otherButton1: classButton, otherButton2: roleButton)
+        NSNotificationCenter.defaultCenter().postNotificationName("DidTapped", object: nil, userInfo: ["DidTapped": "role"])
+    }
+    
+    @IBAction func dateDidTapped(sender: UIButton) {
+        configButtonColor(sender, otherButton1: roleButton, otherButton2: classButton)
+        NSNotificationCenter.defaultCenter().postNotificationName("DidTapped", object: nil, userInfo: ["DidTapped": "date"])
+    }
+    
+    //configure button
+    func configButtonColor(selectedButton : UIButton, otherButton1 : UIButton, otherButton2 : UIButton) {
+        selectedButton.backgroundColor = UIColor(netHex: 0x04BF25)
+        if otherButton1.userInteractionEnabled {
+            otherButton1.backgroundColor = UIColor(netHex: 0x5AC8FA)
+        } else {
+            otherButton1.backgroundColor = UIColor.grayColor()
+        }
+        
+        if otherButton2.userInteractionEnabled {
+            otherButton2.backgroundColor = UIColor(netHex: 0x5AC8FA)
+        } else {
+            otherButton2.backgroundColor = UIColor.grayColor()
+        }
+    }
+    
+    @objc
+    func selected(notification: NSNotification) -> Void {
+        let dict = notification.userInfo as! [String: String]
+        if dict["Selected"] == "class" {
+            classButton.setTitle(dict["classSelected"], forState: .Normal)
+            roleButton.backgroundColor = UIColor(netHex: 0x04BF25)
+            roleButton.userInteractionEnabled = true
+            classButton.backgroundColor = UIColor(netHex: 0x5AC8FA)
+        }
+        if dict["Selected"] == "role" {
+            roleButton.setTitle(dict["roleSelected"], forState: .Normal)
+            dateButton.backgroundColor = UIColor(netHex: 0x04BF25)
+            dateButton.userInteractionEnabled = true
+            roleButton.backgroundColor = UIColor(netHex: 0x5AC8FA)
+        }
+        if dict["Selected"] == "time" {
+            dateButton.setTitle(dict["timeSelected"], forState: .Normal)
+        }
+    }
+    
+    
 }

@@ -35,7 +35,7 @@ class DateSelectorView: UIView, CVCalendarViewDelegate, CVCalendarMenuViewDelega
     @IBAction func submitDidTapped(sender: UIButton) {
         submitFlag = "submit"
         sender.userInteractionEnabled = false
-        NSNotificationCenter.defaultCenter().postNotificationName("Date Selector", object: nil, userInfo: ["submitFlag": submitFlag, "time": time])
+        NSNotificationCenter.defaultCenter().postNotificationName("Selector", object: nil, userInfo: ["Selected": "date", "submitFlag": submitFlag, "time": time])
     }
     
     func presentationMode() -> CalendarMode {

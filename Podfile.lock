@@ -14,6 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - Alamofire (3.4.1)
   - CVCalendar (1.2.9)
   - ReachabilitySwift (2.3.3)
   - Realm (1.0.1):
@@ -26,6 +27,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - Alamofire
   - CVCalendar
   - ReachabilitySwift
   - RealmSwift
@@ -34,6 +36,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
   CVCalendar: 0799256e0bc3b43e83b7e86c0729ce9ff0624cb6
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   Realm: 2e15e39d35b08abb529e212ed5d8af107b5236c8
@@ -41,6 +44,6 @@ SPEC CHECKSUMS:
   SlideMenuControllerSwift: 16dac00b1aaad153e64fffb5d6969ab31ad88372
   Socket.IO-Client-Swift: 79dfbbe170d7816c84e2d3cc2baa3d227549e067
 
-PODFILE CHECKSUM: 4eeea34e4185eb35bc373deefbcaaa6e47630937
+PODFILE CHECKSUM: fefa5a7d771250e2d5aa925dd9ca6d4d9bc66f8a
 
 COCOAPODS: 1.0.1

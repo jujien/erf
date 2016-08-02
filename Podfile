@@ -12,4 +12,5 @@ target 'ERF' do
   pod 'Socket.IO-Client-Swift'
   pod 'AFNetworking'
   pod 'ReachabilitySwift'
+  pod 'Alamofire'
 end

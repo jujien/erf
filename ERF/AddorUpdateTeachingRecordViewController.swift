@@ -11,7 +11,7 @@ import RealmSwift
 
 class AddorUpdateTeachingRecordViewController: UIViewController {
     
-    @IBOutlet weak var instructorView: InstructorDetailView!
+    @IBOutlet weak var instructorView: UIView!
     @IBOutlet weak var maskView: UIView!
     
     var currentViewInMaskView : UIView?
@@ -29,16 +29,14 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        instructorView.instructor = instructor
+        loadDetail()
         loadClass()
         chooseStep()
         for recognizer in self.view.gestureRecognizers ?? [] {
             self.view.removeGestureRecognizer(recognizer)
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(classSelector), name: "Class Selector", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(roleSelector), name: "Role Selector", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(dateSelector), name: "Date Selector", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(selector), name: "Selector", object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -54,92 +52,68 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
     func nextStep() -> Void {
         if classSelected != "" {
             loadRole()
-            instructorView.classButton.setTitle(classSelected, forState: .Normal)
-            instructorView.roleButton.backgroundColor = UIColor(netHex: 0x04BF25)
-            instructorView.roleButton.userInteractionEnabled = true
-            instructorView.classButton.backgroundColor = UIColor(netHex: 0x5AC8FA)
+            NSNotificationCenter.defaultCenter().postNotificationName("Selected", object: nil, userInfo: ["Selected": "class", "classSelected": classSelected])
         }
         
         if roleSelected != "" {
             loadCalendar()
-            instructorView.roleButton.setTitle(roleSelected, forState: .Normal)
-            instructorView.dateButton.backgroundColor = UIColor(netHex: 0x04BF25)
-            instructorView.dateButton.userInteractionEnabled = true
-            instructorView.roleButton.backgroundColor = UIColor(netHex: 0x5AC8FA)
+            NSNotificationCenter.defaultCenter().postNotificationName("Selected", object: nil, userInfo: ["Selected": "role", "roleSelected": roleSelected])
         }
         
         if timeSelected != "" {
-            instructorView.dateButton.setTitle(timeSelected, forState: .Normal)
+            NSNotificationCenter.defaultCenter().postNotificationName("Selected", object: nil, userInfo: ["Selected": "time", "timeSelected": timeSelected])
         }
         
         if submitSelected != "" {
-            
+            //
         }
     }
     
     func chooseStep() -> Void {
-        instructorView.classButton.addTarget(self, action: #selector(classDidTapped), forControlEvents: .TouchUpInside)
-        instructorView.roleButton.addTarget(self, action: #selector(roleDidTapped), forControlEvents: .TouchUpInside)
-        instructorView.dateButton.addTarget(self, action: #selector(dateDidTapped), forControlEvents: .TouchUpInside)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didTapped), name: "DidTapped", object: nil)
     }
     
     
     //MARK: method observer
     @objc
-    func classSelector(notification: NSNotification) -> Void {
-        classSelected = notification.userInfo!["classSelected"] as! String
-        nextStep()
-    }
-    
-    @objc
-    func roleSelector(notification: NSNotification) -> Void {
-        roleSelected = notification.userInfo!["roleSelected"] as! String
-        nextStep()
-    }
-    
-    @objc
-    func dateSelector(notification: NSNotification) ->Void {
-        timeSelected = notification.userInfo!["time"] as! String
-        submitSelected = notification.userInfo!["submitFlag"] as! String
-        nextStep()
-    }
-    
-    //MARK: method target
-    @objc
-    func classDidTapped (sender: UIButton) {
-        loadClass()
-        configButtonColor(sender, otherButton1: instructorView.roleButton, otherButton2: instructorView.dateButton)
-    }
-    
-    @objc
-    func roleDidTapped(sender: UIButton) {
-        loadRole()
-        configButtonColor(sender, otherButton1: instructorView.classButton, otherButton2: instructorView.roleButton)
-    }
-    
-    @objc
-    func dateDidTapped(sender: UIButton) {
-        loadCalendar()
-        configButtonColor(sender, otherButton1: instructorView.roleButton, otherButton2: instructorView.classButton)
-    }
-    
-    //configure button
-    func configButtonColor(selectedButton : UIButton, otherButton1 : UIButton, otherButton2 : UIButton) {
-        selectedButton.backgroundColor = UIColor(netHex: 0x04BF25)
-        if otherButton1.userInteractionEnabled {
-            otherButton1.backgroundColor = UIColor(netHex: 0x5AC8FA)
-        } else {
-            otherButton1.backgroundColor = UIColor.grayColor()
+    func selector(notification: NSNotification) -> Void {
+        let dict = notification.userInfo as! [String: String]
+        if dict["Selected"] == "class" {
+            classSelected = dict["classSelected"]!
+            nextStep()
+        } else if dict["Selected"] == "role" {
+            roleSelected = dict["roleSelected"]!
+            nextStep()
+        } else if dict["Selected"] == "date" {
+            timeSelected = dict["time"]!
+            submitSelected = dict["submitFlag"]!
+            nextStep()
         }
         
-        if otherButton2.userInteractionEnabled {
-            otherButton2.backgroundColor = UIColor(netHex: 0x5AC8FA)
-        } else {
-            otherButton2.backgroundColor = UIColor.grayColor()
-        }
     }
     
+    @objc
+    func didTapped (notification: NSNotification) {
+        let dict = notification.userInfo as! [String: String]
+        if dict["DidTapped"] == "class" {
+            loadClass()
+        } else if dict["DidTapped"] == "role" {
+            loadRole()
+        } else if dict["DidTapped"] == "date" {
+            loadCalendar()
+        }
+        
+    }
+    
+    
     //MARK: loadView
+    func loadDetail() -> Void {
+        let viewInfo = NSBundle.mainBundle().loadNibNamed("InstructorInfoView", owner: self, options: nil)[0] as! InstructorDetailView
+        viewInfo.frame = instructorView.bounds
+        viewInfo.instructor = instructor
+        instructorView.addSubview(viewInfo)
+    }
+    
     func loadClass() -> Void {
         let viewClass = NSBundle.mainBundle().loadNibNamed("ClassSelectorView", owner: self, options: nil)[0] as! ClassSelectorView
         viewClass.instructor = instructor
@@ -157,7 +131,7 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
     }
     
     func loadCalendar() -> Void {
-        let calendarView = NSBundle.mainBundle().loadNibNamed("CalendarSelector", owner: self, options: nil)[0] as! DateSelectorView
+        let calendarView = NSBundle.mainBundle().loadNibNamed("CalendarSelectorView", owner: self, options: nil)[0] as! DateSelectorView
         calendarView.frame = maskView.bounds
         calendarView.time = timeSelected
         calendarView.submitFlag = submitSelected
