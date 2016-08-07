@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import AWSS3
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -19,7 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        NetworkConfig.shareInstance.socketTakePush { (data) in
 //            print(data[0])
 //        }
-        self.registerForPushNotifications(application)
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:Region,identityPoolId:CognitoPoolID)
+        let configuration = AWSServiceConfiguration(region:Region, credentialsProvider:credentialsProvider)
+        //AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
+        AWSS3TransferManager.registerS3TransferManagerWithConfiguration(configuration, forKey: "USWest2S3TransferManager")
+        //self.registerForPushNotifications(application)
         self.window?.makeKeyAndVisible()
         self.customAppearance()
         return true

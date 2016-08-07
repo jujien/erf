@@ -12,6 +12,12 @@ import Alamofire
 import AWSS3
 import AssetsLibrary
 
+let S3BuketName = "iliat-app"
+let CognitoPoolID = "us-west-2:146358ec-81cc-41dd-acb8-5fb66313ea33"
+let Region = AWSRegionType.USWest2
+let Auth_Role = "arn:aws:iam::782795435677:role/Cognito_iliatAuth_Role"
+let Unauth_Role = "arn:aws:iam::782795435677:role/Cognito_iliatUnauth_Role"
+let AccountID = "7827-9543-5677"
 class CreateInstructorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var avatarImageView: UIImageView!
@@ -30,9 +36,7 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     var imagePicker: UIImagePickerController!
     var image: UIImage!
     
-    let S3BuketName = "iliat-demo-app"
-    let CognitoPoolID = "us-west-2:146358ec-81cc-41dd-acb8-5fb66313ea33"
-    let Region = AWSRegionType.USWest2
+    
     
     
     override func viewDidLoad() {
@@ -158,16 +162,13 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
                 print("error")
                 return
             }
-            let credentialsProvider = AWSCognitoCredentialsProvider(regionType:Region,
-                                                                    identityPoolId:CognitoPoolID)
-            let configuration = AWSServiceConfiguration(region:Region, credentialsProvider:credentialsProvider)
-            AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
+            
             let uploadRequest = AWSS3TransferManagerUploadRequest()
             uploadRequest.body = tempPath
             uploadRequest.key = NSProcessInfo.processInfo().globallyUniqueString + ".png"
             uploadRequest.bucket = S3BuketName
             uploadRequest.contentType = "image/png"
-            let transferManager = AWSS3TransferManager.defaultS3TransferManager()
+            let transferManager = AWSS3TransferManager.S3TransferManagerForKey("USWest2S3TransferManager")
             transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject! in
                 if let error = task.error {
                     print("Upload failed ❌ (\(error))")
@@ -176,10 +177,8 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
                     print("Upload failed ❌ (\(exception))")
                 }
                 if task.result != nil {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.imageURL = (NSURL(string: "http://s3.amazonaws.com/\(self.S3BuketName)/\(uploadRequest.key!)")!).absoluteString
-                        print("Uploaded to:\n\(self.imageURL)")
-                    })
+                    self.imageURL = (NSURL(string: "http://s3-us-west-2.amazonaws.com/\(S3BuketName)/\(uploadRequest.key!)")!).absoluteString
+                    print("Uploaded to:\n\(self.imageURL)")
                     
                 }
                 else {
