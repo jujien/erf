@@ -13,4 +13,5 @@ target 'ERF' do
   pod 'AFNetworking'
   pod 'ReachabilitySwift'
   pod 'Alamofire'
+  pod 'AWSS3'
 end

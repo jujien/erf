@@ -9,6 +9,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>AWSCore.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>AWSS3.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Alamofire.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,17 +62,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>1B857CB1A9E2B0C54C8EEF7D179810B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1C3436CEA5C3D39764C5F54374794ECB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4A432D336281984C32A99E0366D267B4</key>
+		<key>3B41A9B1D49827D58E203AF61D34F608</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6DC52B05FFF863121AE2EC5FA1C0347F</key>
+		<key>6E7323CB67991681F05E4233B6B15210</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>716FB54BD65FAA6714EBBF918E901AC9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -72,17 +92,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>99221134CC3782586A1AE4507D341C1A</key>
+		<key>89ECFBC073F8440D5E975F484367439A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A6EE26BA747FA5A8F49D651BAB79FBDD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B81FB94FA08D395C80AF5BC32FE1C864</key>
+		<key>A631F51A1DE4E52F12077493D1CDC460</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,7 +107,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E50A1D44D1DB62C21369AE3D3D4431EE</key>
+		<key>DD4C60D0C1ADF7586B8862EEA147DE00</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E44AA1FB3C2BE112DFD16E847B6697AB</key>
 		<dict>
 			<key>primary</key>
 			<true/>

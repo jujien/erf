@@ -31,6 +31,7 @@ class InstructorCollectionViewCell: UICollectionViewCell {
         nameLabel.text = "\(instructor!.name)"
         codeLabel.text = "\(instructor!.code)"
         LazyImage.showForImageView(avatarImageView, url: instructor?.imageUrl)
+        //avatarImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(fileURLWithPath: "assets-library://asset/asset.JPG?id=D754B3B9-E074-46A4-87DA-6200AD57E4E6&ext=JPG"))!)
         
     }
 }

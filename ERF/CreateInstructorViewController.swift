@@ -9,6 +9,8 @@
 import UIKit
 import RealmSwift
 import Alamofire
+import AWSS3
+import AssetsLibrary
 
 class CreateInstructorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -18,6 +20,8 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     @IBOutlet weak var classRoleButton: UIButton!
     
     //var instructor: Instructor!
+    var imageURL = ""
+    var imagePath = ""
     var username = ""
     var phone = ""
     var classRoles = List<ClassRole>()
@@ -26,6 +30,11 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     var imagePicker: UIImagePickerController!
     var image: UIImage!
     
+    let S3BuketName = "iliat-demo-app"
+    let CognitoPoolID = "us-west-2:146358ec-81cc-41dd-acb8-5fb66313ea33"
+    let Region = AWSRegionType.USWest2
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         classRoleButton.userInteractionEnabled = false
@@ -33,6 +42,7 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
         tapImage()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeClassRoles), name: "Complete ClassRoles", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeUser), name: "Complete User", object: nil)
+        
         
     }
     
@@ -139,14 +149,56 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
                 let clsRole = ["className": c.classCode, "role": c.roleCode]
                 clsRoles.append(clsRole)
             }
-            let instructor = ["name":username, "phone": phone, "code": "TECH10", "imageURL": "imageURL", "classRole": clsRoles]
-            Alamofire.request(.POST, urlProducts, parameters: instructor as? [String : AnyObject], encoding: .JSON).response(completionHandler: { (resquest, response, data, error) in
-                if let error = error {
-                    print("error: \(error)")
-                    return
+            
+            let tempPath = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("avatar.png")
+            let dataImage = UIImagePNGRepresentation(avatarImageView.image!)
+            if dataImage?.writeToURL(tempPath, atomically: true) == true {
+                print("write to completed")
+            } else {
+                print("error")
+                return
+            }
+            let credentialsProvider = AWSCognitoCredentialsProvider(regionType:Region,
+                                                                    identityPoolId:CognitoPoolID)
+            let configuration = AWSServiceConfiguration(region:Region, credentialsProvider:credentialsProvider)
+            AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
+            let uploadRequest = AWSS3TransferManagerUploadRequest()
+            uploadRequest.body = tempPath
+            uploadRequest.key = NSProcessInfo.processInfo().globallyUniqueString + ".png"
+            uploadRequest.bucket = S3BuketName
+            uploadRequest.contentType = "image/png"
+            let transferManager = AWSS3TransferManager.defaultS3TransferManager()
+            transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject! in
+                if let error = task.error {
+                    print("Upload failed ❌ (\(error))")
                 }
-                print("success")
-            })
+                if let exception = task.exception {
+                    print("Upload failed ❌ (\(exception))")
+                }
+                if task.result != nil {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.imageURL = (NSURL(string: "http://s3.amazonaws.com/\(self.S3BuketName)/\(uploadRequest.key!)")!).absoluteString
+                        print("Uploaded to:\n\(self.imageURL)")
+                    })
+                    
+                }
+                else {
+                    print("Unexpected empty result.")
+                }
+                return nil
+            }
+            if imageURL != "" {
+                let instructor = ["name":username, "phone": phone, "code": "TECH10", "imageURL": imageURL, "classRole": clsRoles]
+                Alamofire.request(.POST, urlProducts, parameters: instructor as? [String : AnyObject], encoding: .JSON).response(completionHandler: { (resquest, response, data, error) in
+                    if let error = error {
+                        print("error: \(error)")
+                        return
+                    }
+                    print("success")
+                    NetworkConfig.shareInstance.socketServerEvent("New instructor")
+                })
+            }
+            
         }
         
     }
@@ -169,12 +221,31 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
         let logoImage = UIImage(named: "techkid")
         UIGraphicsBeginImageContext(image.size)
         image.drawInRect(CGRectMake(0, 0, image.size.width, image.size.height))
-        logoImage!.drawInRect(CGRectMake((image.size.width - logoImage!.size.width)/2 , 10, logoImage!.size.width, logoImage!.size.height))
+        logoImage!.drawInRect(CGRectMake(0 , 0, image!.size.width, image!.size.height))
         let watermarkImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         avatarImageView.image = watermarkImage
         if imagePicker.sourceType == .Camera {
-            UIImageWriteToSavedPhotosAlbum(watermarkImage, nil, nil, nil)
+            //UIImageWriteToSavedPhotosAlbum(watermarkImage, nil, nil, nil)
+            let library = ALAssetsLibrary()
+            library.writeImageToSavedPhotosAlbum(watermarkImage.CGImage, orientation: ALAssetOrientation(rawValue: watermarkImage.imageOrientation.rawValue)!, completionBlock: { (url, error) in
+                if let error = error {
+                    print("error: \(error)")
+                    return
+                }
+                self.imagePath = url.absoluteString
+                print(self.imagePath)
+            })
+        } else if imagePicker.sourceType == .PhotoLibrary {
+            let library = ALAssetsLibrary()
+            library.writeImageToSavedPhotosAlbum(watermarkImage.CGImage, orientation: ALAssetOrientation(rawValue: watermarkImage.imageOrientation.rawValue)!, completionBlock: { (url, error) in
+                if let error = error {
+                    print("error: \(error)")
+                    return
+                }
+                self.imagePath = url.absoluteString
+                print(self.imagePath)
+            })
         }
         dismissViewControllerAnimated(true, completion: nil)
     }
