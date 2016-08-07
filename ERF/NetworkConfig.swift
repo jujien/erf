@@ -9,10 +9,14 @@
 import UIKit
 import SocketIOClientSwift
 import AFNetworking
+
+let urlProducts = "https://dataforiliat.herokuapp.com/api/products"
+let urlClasses = "https://dataforiliat.herokuapp.com/api/classes"
+
 class NetworkConfig: NSObject {
     var socket : SocketIOClient!
     
-    let url = NSURL(string: "https://dataforiliat.herokuapp.com/api/products")!
+    let url = NSURL(string: urlClasses)!
     
     let urlSocketIO = NSURL(string :"https://dataforiliat.herokuapp.com")!
     
@@ -84,6 +88,28 @@ class NetworkConfig: NSObject {
             }
             
         }).resume()
+    }
+    
+    func socketTakePush(callback: ([AnyObject]) -> Void) -> Void {
+        socket = SocketIOClient(socketURL: urlSocketIO)
+        socket.connect()
+        //        socket.on("user-connected") { (data, ack) in
+        //            print("socket test ")
+        //        }
+        socket.on("notiWithName") { (data, ack) in
+            // ham push o day , data la ten instructor moi
+            callback(data)
+        }
+    }
+    
+    
+    func socketServerEvent(data : String) -> Void {
+        socket = SocketIOClient(socketURL: urlSocketIO)
+        socket.connect()
+        
+        // data la name cua new instructor
+        
+        socket.emit("notification", data)
     }
     
     

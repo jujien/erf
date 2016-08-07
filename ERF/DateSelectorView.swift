@@ -27,6 +27,7 @@ class DateSelectorView: UIView, CVCalendarViewDelegate, CVCalendarMenuViewDelega
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         calendarView.commitCalendarViewUpdate()
         calendarMenuView.commitMenuViewUpdate()
         submitButton.layer.cornerRadius = 5.0

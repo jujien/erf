@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+
+        self.registerForPushNotifications(application)
         self.window?.makeKeyAndVisible()
         self.customAppearance()
         return true
@@ -25,10 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "Helvetica Neue", size: 18)!]
         let hex: Int = 0x4CD964
-        UINavigationBar.appearance().barTintColor = UIColor(red: (CGFloat((hex >> 16) & 0xff)) / 255.0, green: (CGFloat((hex >> 8) & 0xff) / 255.0), blue: (CGFloat(hex & 0xff) / 255.0), alpha: 1.0)
-        //UINavigationBar.appearance().backgroundColor = UIColor(red: 76.0, green: 217.0, blue: 100.0, alpha: 1.0)
-        //UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        UINavigationBar.appearance().barTintColor = UIColor(netHex: hex)
         
+    }
+    
+    func registerForPushNotifications(application: UIApplication) -> Void {
+         let notificationSettings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
+        application.registerUserNotificationSettings(notificationSettings)
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -52,7 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
 
 }
 

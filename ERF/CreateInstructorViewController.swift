@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Alamofire
 
 class CreateInstructorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -16,7 +17,7 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     @IBOutlet weak var userButton: UIButton!
     @IBOutlet weak var classRoleButton: UIButton!
     
-    var instructor: Instructor!
+    //var instructor: Instructor!
     var username = ""
     var phone = ""
     var classRoles = List<ClassRole>()
@@ -73,8 +74,6 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     @objc
     func completeClassRoles(notification: NSNotification) -> Void {
         classRoles = notification.userInfo!["classRoles"] as! List<ClassRole>
-//        print("\(team)")
-//        print("\(classRoles)")
         classRoleButton.setImage(UIImage(named: "circle-tick-7"), forState: .Normal)
     }
     
@@ -135,7 +134,19 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
         } else {
             NSNotificationCenter.defaultCenter().removeObserver(self, name: "Complete User", object: nil)
             NSNotificationCenter.defaultCenter().removeObserver(self, name: "Complete ClassRoles", object: nil)
-            instructor = Instructor.create("image", name: username, code: "123", phone: phone, classRoles: classRoles)
+            var clsRoles: [AnyObject] = []
+            for c in classRoles {
+                let clsRole = ["className": c.classCode, "role": c.roleCode]
+                clsRoles.append(clsRole)
+            }
+            let instructor = ["name":username, "phone": phone, "code": "TECH10", "imageURL": "imageURL", "classRole": clsRoles]
+            Alamofire.request(.POST, urlProducts, parameters: instructor as? [String : AnyObject], encoding: .JSON).response(completionHandler: { (resquest, response, data, error) in
+                if let error = error {
+                    print("error: \(error)")
+                    return
+                }
+                print("success")
+            })
         }
         
     }

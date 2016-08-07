@@ -30,11 +30,12 @@ class InstructorDetailView: UIView {
     }
     
     override func awakeFromNib() {
-//        let viewInfo = NSBundle.mainBundle().loadNibNamed("InstructorInfoView", owner: self, options: nil)[0] as! UIView
-//        self.layoutIfNeeded()
-//        viewInfo.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
-//        self.addSubview(viewInfo)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(selected), name: "Selected", object: nil)
+        classButton.backgroundColor = UIColor(netHex: 0x04BF25)
+        roleButton.backgroundColor = UIColor.grayColor()
+        roleButton.userInteractionEnabled = false
+        dateButton.backgroundColor = UIColor.grayColor()
+        dateButton.userInteractionEnabled = false
     }
     
     override func layoutSubviews() {

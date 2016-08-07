@@ -20,7 +20,6 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
     var instructorRole = ""
     var dateUpdate = ""
     var teachingRecordId = ""
-    var isUpdate = false
     
     var classSelected = ""
     var roleSelected = ""
@@ -29,6 +28,9 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.translucent = true
         loadDetail()
         loadClass()
         chooseStep()
@@ -39,13 +41,17 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(selector), name: "Selector", object: nil)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillDisappear(animated: Bool) {
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.navigationBar.translucent = false
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        super.viewDidAppear(animated)
-        
+        super.viewWillDisappear(animated)
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        let statusBar: UIStatusBarStyle = .LightContent
+        return statusBar
     }
     
     //MARK: change view

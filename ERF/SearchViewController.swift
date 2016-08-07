@@ -23,11 +23,11 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         super.viewDidLoad()
         self.configureUI()
         self.getInstructor()
+        //NetworkConfig.shareInstance.getAndParseJson()
         
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
         self.closeLeft()
         instructorCollectionView.reloadData()
     }
@@ -47,10 +47,10 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                             let instructor = object as! [String: AnyObject]
                             let code = "TECH 10"
                             let name = instructor["name"] as! String
-                            let phone = instructor["phone"] as! Int
+                            let phone = instructor["phone"] as! String
                             let imageUrl = instructor["imageURL"] as! String
-                            let cls = (instructor["class"] as! [AnyObject])[0] as! [String: String]
-                            let classRole = ClassRole.create(cls["nameClass"]!, roleCode: cls["classRole"]!)
+                            let cls = (instructor["classRole"] as! [AnyObject])[0] as! [String: String]
+                            let classRole = ClassRole.create(cls["className"]!, roleCode: cls["role"]!)
                             let classRoles = List<ClassRole>()
                             classRoles.append(classRole)
                             self.instructors.append(Instructor.create(imageUrl, name: name, code: code, phone: "\(phone)", classRoles: classRoles))
@@ -70,11 +70,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             })
         }
         try! reachability?.startNotifier()
-//        NetworkConfig.shareInstance.getAndParseJson { (data) in
-//            let objects = data
-
-//        }
-        
     }
     
     //MARK: -configure UI and Layout
@@ -124,6 +119,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationController?.pushViewController(instructorDetail, animated: true)
     }
     
+    //MARK: UICollectionViewDelegateFlowLayout
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let width = (self.view.frame.width - 25.0)/2.0
         return CGSize(width:  width, height: 3.0*width/2.0)

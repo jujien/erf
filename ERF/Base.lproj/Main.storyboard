@@ -303,7 +303,7 @@
         <!--Navigation Controller-->
         <scene sceneID="eqj-QN-zc8">
             <objects>
-                <navigationController storyboardIdentifier="NavigationSearch" id="BjT-5S-GGe" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationSearch" id="BjT-5S-GGe" customClass="NavigationController" customModule="ERF" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5xB-Nt-qAr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -469,6 +469,8 @@
                             <constraint firstItem="1W5-AO-frg" firstAttribute="top" secondItem="tf8-Fe-Y5Z" secondAttribute="bottom" id="xa5-J2-Zct"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="instructorView" destination="37z-xR-kSW" id="QHg-0t-AZX"/>
                         <outlet property="maskView" destination="tf8-Fe-Y5Z" id="Elx-ep-iIE"/>
@@ -620,7 +622,7 @@
         <!--Navigation Controller-->
         <scene sceneID="4By-2o-q4C">
             <objects>
-                <navigationController storyboardIdentifier="NavigationCreate" id="VLB-jt-LDc" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationCreate" id="VLB-jt-LDc" customClass="NavigationController" customModule="ERF" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="HHS-Rs-uCl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
