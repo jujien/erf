@@ -11,6 +11,7 @@ import RealmSwift
 import Alamofire
 import AWSS3
 import ReachabilitySwift
+import SlideMenuControllerSwift
 
 let S3BuketName = "iliat-app"
 let CognitoPoolID = "us-west-2:146358ec-81cc-41dd-acb8-5fb66313ea33"
@@ -261,7 +262,14 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
                             NetworkConfig.shareInstance.socketServerEvent(self.username)
                             self.waitIndicator.stopAnimating()
                             self.waitIndicator.hidden = true
-                            self.showAlert("Success!", message: "Create Completed", titleActions: ["OK"], actions: nil, complete: nil)
+                            let action = {
+                                (action: UIAlertAction) in
+                                let leftViewController = self.storyboard!.instantiateViewControllerWithIdentifier(leftMenu)
+                                let searchNavigationController = self.storyboard!.instantiateViewControllerWithIdentifier(naviSearchVC) as! NavigationController
+                                let slideViewController = SlideMenuController(mainViewController: searchNavigationController, leftMenuViewController: leftViewController)
+                                self.view.window?.rootViewController = slideViewController
+                            }
+                            self.showAlert("Success!", message: "Create Completed", titleActions: ["OK"], actions: [action], complete: nil)
                         })
                     })
                     
@@ -280,5 +288,9 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
             })
         }
         try! reachability?.startNotifier()
+    }
+    
+    func searchVC(action: UIAlertAction) {
+        
     }
 }

@@ -94,14 +94,14 @@ class CreateUserInstructorView: UIView, UITextFieldDelegate, UIAlertViewDelegate
     
     @objc
     func hide(notification: NSNotification) {
-        let contraintUser = (self.constraints.filter({ (contraint) -> Bool in
-            return contraint.identifier == identifierCenterContraintNameView
-        }))[0]
-        let contraintPhone = (self.constraints.filter({ (contraint) -> Bool in
-            return contraint.identifier == identifierCenterContraintPhoneView
-        }))[0]
-        contraintPhone.constant = 50
-        contraintUser.constant = -50
+//        let contraintUser = (self.constraints.filter({ (contraint) -> Bool in
+//            return contraint.identifier == identifierCenterContraintNameView
+//        }))[0]
+//        let contraintPhone = (self.constraints.filter({ (contraint) -> Bool in
+//            return contraint.identifier == identifierCenterContraintPhoneView
+//        }))[0]
+//        contraintPhone.constant = 50
+//        contraintUser.constant = -50
     }
     
 }
