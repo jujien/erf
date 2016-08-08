@@ -26,5 +26,8 @@ class ObserverName {
     static let userObserver = "Complete User"
     static let classRoleObserver = "Complete ClassRoles"
     
-    
+    //MARK: keyboard
+    static let showKeyboard = "Show Keyboard"
+    static let hideKeyboard = "Hide Keyboard"
+    static let sizeKeyboard = "SizeKeyboard"
 }

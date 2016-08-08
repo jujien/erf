@@ -98,10 +98,10 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="qbG-2X-JE3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="0J4-uW-2DJ"/>
-                <constraint firstItem="qbG-2X-JE3" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-50" id="4QH-Yu-2yG"/>
+                <constraint firstItem="qbG-2X-JE3" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-50" identifier="contraintNameView" id="4QH-Yu-2yG"/>
                 <constraint firstItem="4IL-Cx-Nhm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="Rrz-Hi-Zys"/>
                 <constraint firstAttribute="trailing" secondItem="4IL-Cx-Nhm" secondAttribute="trailing" constant="8" id="Uvt-26-4Ny"/>
-                <constraint firstItem="4IL-Cx-Nhm" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="50" id="VVF-hJ-HEP"/>
+                <constraint firstItem="4IL-Cx-Nhm" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="50" identifier="ContraintPhoneView" id="VVF-hJ-HEP"/>
                 <constraint firstItem="4IL-Cx-Nhm" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="pNM-QE-mXc"/>
                 <constraint firstAttribute="trailing" secondItem="qbG-2X-JE3" secondAttribute="trailing" constant="8" id="uhX-XB-ZJx"/>
                 <constraint firstItem="qbG-2X-JE3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="vQ1-IW-ou7"/>

@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class CreateUserInstructorView: UIView, UITextFieldDelegate, UIAlertViewDelegate{
 
     @IBOutlet weak var usernameTextField: UITextField!
@@ -16,7 +18,12 @@ class CreateUserInstructorView: UIView, UITextFieldDelegate, UIAlertViewDelegate
     var username = ""
     var phone = ""
     
+    let identifierCenterContraintNameView = "contraintNameView"
+    let identifierCenterContraintPhoneView = "ContraintPhoneView"
+    
     override func awakeFromNib() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(show), name: ObserverName.showKeyboard, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(hide), name: ObserverName.hideKeyboard, object: nil)
         usernameTextField.delegate = self
         phoneTextField.delegate = self
         usernameTextField.text = username
@@ -58,6 +65,43 @@ class CreateUserInstructorView: UIView, UITextFieldDelegate, UIAlertViewDelegate
             }
         }
         return false
+    }
+    
+    @objc
+    func show(notification: NSNotification) {
+        //usernameTextField.becomeFirstResponder()
+//        if usernameTextField.becomeFirstResponder(){
+//            let contraintUser = (self.constraints.filter({ (contraint) -> Bool in
+//                return contraint.identifier == identifierCenterContraintNameView
+//            }))[0]
+//            let contraintPhone = (self.constraints.filter({ (contraint) -> Bool in
+//                return contraint.identifier == identifierCenterContraintPhoneView
+//            }))[0]
+//            contraintPhone.constant = 50
+//            contraintUser.constant = -50
+//        }
+//        if phoneTextField.becomeFirstResponder() {
+//            let contraintUser = (self.constraints.filter({ (contraint) -> Bool in
+//                return contraint.identifier == identifierCenterContraintNameView
+//            }))[0]
+//            let contraintPhone = (self.constraints.filter({ (contraint) -> Bool in
+//                return contraint.identifier == identifierCenterContraintPhoneView
+//            }))[0]
+//            contraintUser.constant = -150
+//            contraintPhone.constant = -50
+//        }
+    }
+    
+    @objc
+    func hide(notification: NSNotification) {
+        let contraintUser = (self.constraints.filter({ (contraint) -> Bool in
+            return contraint.identifier == identifierCenterContraintNameView
+        }))[0]
+        let contraintPhone = (self.constraints.filter({ (contraint) -> Bool in
+            return contraint.identifier == identifierCenterContraintPhoneView
+        }))[0]
+        contraintPhone.constant = 50
+        contraintUser.constant = -50
     }
     
 }

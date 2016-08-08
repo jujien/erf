@@ -16,6 +16,9 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    
+    let identifierBottomLogin = "bottomLoginView"
+    let identifierCenterImage = "centerContraintImage"
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,11 +27,13 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showKeyboard), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(hideKeyboard), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -37,8 +42,26 @@ class LoginViewController: UIViewController {
     
     @objc
     func showKeyboard(notification: NSNotification) {
-//        loginView.layoutIfNeeded()
-//        loginView.frame = CGRectMake(loginView.frame.origin.x, loginView.frame.origin.y - 100, loginView.frame.size.width, loginView.frame.size.height)
+        //loginView.setNeedsLayout()
+        let bottomContraintLogin = (view.constraints.filter({ (contraint) -> Bool in
+            return contraint.identifier == identifierBottomLogin
+        }))[0]
+        let centerContraintImage = (view.constraints.filter({ (contraint) -> Bool in
+            return contraint.identifier == identifierCenterImage
+        }))[0]
+        bottomContraintLogin.constant = 170
+        centerContraintImage.constant = -100
+    }
+    @objc
+    func hideKeyboard(notification: NSNotification) {
+        let bottomContraintLogin = (view.constraints.filter({ (contraint) -> Bool in
+            return contraint.identifier == identifierBottomLogin
+        }))[0]
+        let centerContraintImage = (view.constraints.filter({ (contraint) -> Bool in
+            return contraint.identifier == identifierCenterImage
+        }))[0]
+        bottomContraintLogin.constant = 50
+        centerContraintImage.constant = 0
     }
 
     func setupUI() -> Void {

@@ -11,7 +11,6 @@
 		BF210B8C1D4E2A4B00D55A77 /* NetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF210B8B1D4E2A4B00D55A77 /* NetworkConfig.swift */; };
 		E14BDFB11D477A4F00C92AD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BDFB01D477A4F00C92AD5 /* AppDelegate.swift */; };
 		E14BDFB61D477A5000C92AD5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E14BDFB41D477A5000C92AD5 /* Main.storyboard */; };
-		E14BDFB81D477A5000C92AD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E14BDFB71D477A5000C92AD5 /* Assets.xcassets */; };
 		E14BDFBB1D477A5000C92AD5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E14BDFB91D477A5000C92AD5 /* LaunchScreen.storyboard */; };
 		E14BDFC31D4789D000C92AD5 /* LeftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BDFC21D4789D000C92AD5 /* LeftViewController.swift */; };
 		E14BDFC51D47A41100C92AD5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BDFC41D47A41100C92AD5 /* LoginViewController.swift */; };
@@ -53,6 +52,7 @@
 		E1F105DD1D58496000393CE3 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F105DC1D58496000393CE3 /* URL.swift */; };
 		E1F105DF1D584AC800393CE3 /* IDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F105DE1D584AC800393CE3 /* IDViewController.swift */; };
 		E1F105E21D5856ED00393CE3 /* ObserverName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F105E11D5856ED00393CE3 /* ObserverName.swift */; };
+		E1F105EB1D58821100393CE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1F105EA1D58821100393CE3 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,7 +63,6 @@
 		E14BDFAD1D477A4D00C92AD5 /* ERF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ERF.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E14BDFB01D477A4F00C92AD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E14BDFB51D477A5000C92AD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E14BDFB71D477A5000C92AD5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E14BDFBA1D477A5000C92AD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E14BDFBC1D477A5000C92AD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E14BDFC21D4789D000C92AD5 /* LeftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +105,7 @@
 		E1F105DC1D58496000393CE3 /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		E1F105DE1D584AC800393CE3 /* IDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDViewController.swift; sourceTree = "<group>"; };
 		E1F105E11D5856ED00393CE3 /* ObserverName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverName.swift; sourceTree = "<group>"; };
+		E1F105EA1D58821100393CE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,11 +146,11 @@
 				E14BDFC71D47ACC600C92AD5 /* View */,
 				E14BDFC61D47ACBB00C92AD5 /* Controller */,
 				E15054BB1D4A148900907217 /* Create Controller */,
-				E14BDFB71D477A5000C92AD5 /* Assets.xcassets */,
 				E1F673321D4E72CD00FFC123 /* Networking */,
 				E14E825D1D49069B0017C9D5 /* Utils */,
 				E1F105E01D58569200393CE3 /* Constant */,
 				E14BDFBC1D477A5000C92AD5 /* Info.plist */,
+				E1F105EA1D58821100393CE3 /* Assets.xcassets */,
 			);
 			path = ERF;
 			sourceTree = "<group>";
@@ -354,9 +354,9 @@
 				E15054B81D4A014900907217 /* CreateUserInstructorView.xib in Resources */,
 				E14E826B1D49132F0017C9D5 /* ClassTableViewCell.xib in Resources */,
 				E14E826D1D4914C70017C9D5 /* InstructorInfoView.xib in Resources */,
+				E1F105EB1D58821100393CE3 /* Assets.xcassets in Resources */,
 				E15054AF1D49D4B700907217 /* RoleSelectorView.xib in Resources */,
 				E14BDFBB1D477A5000C92AD5 /* LaunchScreen.storyboard in Resources */,
-				E14BDFB81D477A5000C92AD5 /* Assets.xcassets in Resources */,
 				E15054BA1D4A07D600907217 /* CreateClassRoleView.xib in Resources */,
 				E14BDFB61D477A5000C92AD5 /* Main.storyboard in Resources */,
 				E14E827B1D4926AA0017C9D5 /* CalendarSelectorView.xib in Resources */,

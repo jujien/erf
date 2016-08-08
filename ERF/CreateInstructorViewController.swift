@@ -52,6 +52,16 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
         configureUI()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showKeyboard), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(hideKeyboard), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
     //MARK: choose or take photo
     func tapImage() -> Void {
         let tap = UITapGestureRecognizer(target: self, action: #selector(takePhoto))
@@ -88,11 +98,21 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
         classRoleButton.setImage(UIImage(named: "circle-tick-7"), forState: .Normal)
     }
     
+    @objc
+    func showKeyboard(notification: NSNotification) {
+        NSNotificationCenter.defaultCenter().postNotificationName(ObserverName.showKeyboard, object: nil, userInfo: nil)
+    }
+    
+    @objc
+    func hideKeyboard(notification: NSNotification) {
+        NSNotificationCenter.defaultCenter().postNotificationName(ObserverName.hideKeyboard, object: nil, userInfo: nil)
+    }
+    
     //ConfigureUI
     func configureUI() -> Void {
         self.navigationItem.title = "CREATE INSTRUCTOR"
         avatarImageView.layer.masksToBounds = true
-        avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2.0
+//        avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2.0
         avatarImageView.layer.shadowColor = UIColor.blackColor().CGColor
         avatarImageView.layer.shadowOffset = CGSize(width: 0, height: 1)
         avatarImageView.layer.shadowOpacity = 1.0
@@ -211,7 +231,7 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
             reachability in
             let uploadRequest = AWSS3TransferManagerUploadRequest()
             uploadRequest.body = self.pathImage("avatar\(self.username).jpeg")
-            uploadRequest.key = NSProcessInfo.processInfo().globallyUniqueString + ".jpeg"
+            uploadRequest.key = self.username + ".jpeg"
             uploadRequest.bucket = S3BuketName
             uploadRequest.contentType = "image/jpeg"
             let transferManager = AWSS3TransferManager.S3TransferManagerForKey(key)
@@ -238,7 +258,7 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
                                 return
                             }
                             print("success")
-                            NetworkConfig.shareInstance.socketServerEvent("New instructor \(self.username)")
+                            NetworkConfig.shareInstance.socketServerEvent(self.username)
                             self.waitIndicator.stopAnimating()
                             self.waitIndicator.hidden = true
                             self.showAlert("Success!", message: "Create Completed", titleActions: ["OK"], actions: nil, complete: nil)

@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configuration = AWSServiceConfiguration(region:Region, credentialsProvider:credentialsProvider)
         AWSS3TransferManager.registerS3TransferManagerWithConfiguration(configuration, forKey: key)
         //self.registerForPushNotifications(application)
+        //NetworkConfig.shareInstance.socketServerEvent("Hello")
         self.window?.makeKeyAndVisible()
         self.customAppearance()
         return true

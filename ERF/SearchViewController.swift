@@ -11,7 +11,7 @@ import RealmSwift
 import ReachabilitySwift
 import Alamofire
 
-let identifierSearchCell = "InstructorCell"
+
 
 class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
@@ -20,6 +20,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     var instructors: [Instructor] = [Instructor]()
     var reachability : Reachability?
+    
+    let identifierSearchCell = "InstructorCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
