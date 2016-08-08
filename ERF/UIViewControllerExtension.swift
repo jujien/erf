@@ -19,4 +19,20 @@ extension UIViewController {
     func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    func showAlert(titleAlert: String, message: String, titleActions: [String], actions: [((UIAlertAction) -> Void)?]?, complete: (() -> Void)?) -> Void {
+        let alert = UIAlertController(title: titleAlert, message: message, preferredStyle: .Alert)
+        for i in 0..<titleActions.count {
+            let actionAlert = UIAlertAction(title: titleActions[i], style: .Default, handler: { (action) in
+                if let actions = actions {
+                    if let a = actions[i] {
+                        a(action)
+                    }
+                }
+                
+            })
+            alert.addAction(actionAlert)
+        }
+        presentViewController(alert, animated: true, completion: complete)
+    }
 }

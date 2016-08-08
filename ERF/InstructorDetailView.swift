@@ -71,17 +71,17 @@ class InstructorDetailView: UIView {
     
     @IBAction func classDidTapped(sender: UIButton) {
         configButtonColor(sender, otherButton1: roleButton, otherButton2: dateButton)
-        NSNotificationCenter.defaultCenter().postNotificationName("DidTapped", object: nil, userInfo: ["DidTapped": "class"])
+        NSNotificationCenter.defaultCenter().postNotificationName(ObserverName.didTapped, object: nil, userInfo: [ObserverName.didTapped: ObserverName.cls])
     }
     
     @IBAction func roleDidTapped(sender: UIButton) {
         configButtonColor(sender, otherButton1: classButton, otherButton2: roleButton)
-        NSNotificationCenter.defaultCenter().postNotificationName("DidTapped", object: nil, userInfo: ["DidTapped": "role"])
+        NSNotificationCenter.defaultCenter().postNotificationName(ObserverName.didTapped, object: nil, userInfo: [ObserverName.didTapped: ObserverName.role])
     }
     
     @IBAction func dateDidTapped(sender: UIButton) {
         configButtonColor(sender, otherButton1: roleButton, otherButton2: classButton)
-        NSNotificationCenter.defaultCenter().postNotificationName("DidTapped", object: nil, userInfo: ["DidTapped": "date"])
+        NSNotificationCenter.defaultCenter().postNotificationName(ObserverName.didTapped, object: nil, userInfo: [ObserverName.didTapped: ObserverName.time])
     }
     
     //configure button
@@ -103,20 +103,20 @@ class InstructorDetailView: UIView {
     @objc
     func selected(notification: NSNotification) -> Void {
         let dict = notification.userInfo as! [String: String]
-        if dict["Selected"] == "class" {
-            classButton.setTitle(dict["classSelected"], forState: .Normal)
+        if dict[ObserverName.selected] == ObserverName.cls {
+            classButton.setTitle(dict[ObserverName.classSelected], forState: .Normal)
             roleButton.backgroundColor = UIColor(netHex: 0x04BF25)
             roleButton.userInteractionEnabled = true
             classButton.backgroundColor = UIColor(netHex: 0x5AC8FA)
         }
-        if dict["Selected"] == "role" {
-            roleButton.setTitle(dict["roleSelected"], forState: .Normal)
+        if dict[ObserverName.selected] == ObserverName.role {
+            roleButton.setTitle(dict[ObserverName.roleSelected], forState: .Normal)
             dateButton.backgroundColor = UIColor(netHex: 0x04BF25)
             dateButton.userInteractionEnabled = true
             roleButton.backgroundColor = UIColor(netHex: 0x5AC8FA)
         }
-        if dict["Selected"] == "time" {
-            dateButton.setTitle(dict["timeSelected"], forState: .Normal)
+        if dict[ObserverName.selected] == ObserverName.time {
+            dateButton.setTitle(dict[ObserverName.timeSelected], forState: .Normal)
         }
     }
     

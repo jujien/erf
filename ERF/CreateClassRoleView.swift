@@ -87,7 +87,7 @@ class CreateClassRoleView: UIView, UIPickerViewDelegate, UIPickerViewDataSource{
     @IBAction func finishDidTapped(sender: UIButton) {
         addButton.userInteractionEnabled = false
         pickerView.userInteractionEnabled = false
-        NSNotificationCenter.defaultCenter().postNotificationName("Complete ClassRoles", object: nil, userInfo: ["classRoles": classRoles])
+        NSNotificationCenter.defaultCenter().postNotificationName(ObserverName.classRoleObserver, object: nil, userInfo: [KeyJSON.classRole: classRoles])
         sender.userInteractionEnabled = false
     }
 }

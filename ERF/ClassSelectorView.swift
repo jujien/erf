@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+let identifier = "Cell"
 class ClassSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
@@ -25,8 +25,8 @@ class ClassSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     override func awakeFromNib() {
-        let cellNib = UINib(nibName: "ClassTableViewCell", bundle: nil)
-        self.tableView.registerNib(cellNib, forCellReuseIdentifier: "Cell")
+        let cellNib = UINib(nibName: classTableViewCell, bundle: nil)
+        self.tableView.registerNib(cellNib, forCellReuseIdentifier: identifier)
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -46,7 +46,7 @@ class ClassSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! ClassTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ClassTableViewCell
         let data = classData[indexPath.row]
         cell.classLabel.text = data
         return cell
@@ -55,7 +55,7 @@ class ClassSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         classSelected = classData[indexPath.row]
-        NSNotificationCenter.defaultCenter().postNotificationName("Selector", object: nil, userInfo: ["Selected": "class","classSelected": classSelected])
+        NSNotificationCenter.defaultCenter().postNotificationName(ObserverName.selector, object: nil, userInfo: [ObserverName.selected: ObserverName.cls, ObserverName.classSelected: classSelected])
     }
 
 }

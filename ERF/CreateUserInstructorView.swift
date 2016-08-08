@@ -29,8 +29,8 @@ class CreateUserInstructorView: UIView, UITextFieldDelegate, UIAlertViewDelegate
             if isNumber(phone) {
                 self.username = username
                 self.phone = phone
-                let object: [String: String] = ["username": username, "phone": phone]
-                NSNotificationCenter.defaultCenter().postNotificationName("Complete User", object: nil, userInfo: object)
+                let object: [String: String] = [KeyJSON.name: username, KeyJSON.phone: phone]
+                NSNotificationCenter.defaultCenter().postNotificationName(ObserverName.userObserver, object: nil, userInfo: object)
             } else {
                 let alert = UIAlertView(title: "Lỗi", message: "Chỉ chứa số", delegate: self, cancelButtonTitle: "OK")
                 alert.show()

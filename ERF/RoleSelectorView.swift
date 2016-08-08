@@ -13,8 +13,8 @@ class RoleSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     
     override func awakeFromNib() {
-        let cellNib = UINib(nibName: "ClassTableViewCell", bundle: nil)
-        self.tableView.registerNib(cellNib, forCellReuseIdentifier: "Cell")
+        let cellNib = UINib(nibName: classTableViewCell, bundle: nil)
+        self.tableView.registerNib(cellNib, forCellReuseIdentifier: identifier)
     }
 
     var roleData: [String] = []
@@ -44,7 +44,7 @@ class RoleSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! ClassTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ClassTableViewCell
         
         // Configure the cell...
         let data = roleData[indexPath.row]
@@ -55,6 +55,6 @@ class RoleSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         roleSelected = roleData[indexPath.row]
-        NSNotificationCenter.defaultCenter().postNotificationName("Selector", object: nil, userInfo: ["Selected": "role", "roleSelected": roleSelected])
+        NSNotificationCenter.defaultCenter().postNotificationName(ObserverName.selector, object: nil, userInfo: [ObserverName.selected: ObserverName.role, ObserverName.roleSelected: roleSelected])
     }
 }

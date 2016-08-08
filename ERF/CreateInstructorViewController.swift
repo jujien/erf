@@ -10,24 +10,21 @@ import UIKit
 import RealmSwift
 import Alamofire
 import AWSS3
-import AssetsLibrary
+import ReachabilitySwift
 
 let S3BuketName = "iliat-app"
 let CognitoPoolID = "us-west-2:146358ec-81cc-41dd-acb8-5fb66313ea33"
 let Region = AWSRegionType.USWest2
-let Auth_Role = "arn:aws:iam::782795435677:role/Cognito_iliatAuth_Role"
-let Unauth_Role = "arn:aws:iam::782795435677:role/Cognito_iliatUnauth_Role"
-let AccountID = "7827-9543-5677"
 class CreateInstructorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var maskView: UIView!
     @IBOutlet weak var userButton: UIButton!
     @IBOutlet weak var classRoleButton: UIButton!
+    @IBOutlet weak var waitIndicator: UIActivityIndicatorView!
     
     //var instructor: Instructor!
     var imageURL = ""
-    var imagePath = ""
     var username = ""
     var phone = ""
     var classRoles = List<ClassRole>()
@@ -36,7 +33,7 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     var imagePicker: UIImagePickerController!
     var image: UIImage!
     
-    
+    var reachability : Reachability?
     
     
     override func viewDidLoad() {
@@ -44,8 +41,8 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
         classRoleButton.userInteractionEnabled = false
         loadCreateUser()
         tapImage()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeClassRoles), name: "Complete ClassRoles", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeUser), name: "Complete User", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeClassRoles), name: ObserverName.classRoleObserver, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeUser), name: ObserverName.userObserver, object: nil)
         
         
     }
@@ -80,14 +77,14 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     //MARK: method observer
     @objc
     func completeUser(notification: NSNotification) -> Void {
-        username = notification.userInfo!["username"] as! String
-        phone = notification.userInfo!["phone"] as! String
+        username = notification.userInfo![KeyJSON.name] as! String
+        phone = notification.userInfo![KeyJSON.phone] as! String
         nextStep()
     }
     
     @objc
     func completeClassRoles(notification: NSNotification) -> Void {
-        classRoles = notification.userInfo!["classRoles"] as! List<ClassRole>
+        classRoles = notification.userInfo![KeyJSON.classRole] as! List<ClassRole>
         classRoleButton.setImage(UIImage(named: "circle-tick-7"), forState: .Normal)
     }
     
@@ -103,12 +100,14 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
         avatarImageView.clipsToBounds = false
         userButton.layer.cornerRadius = userButton.frame.width / 2.0
         classRoleButton.layer.cornerRadius = classRoleButton.frame.width / 2.0
+        waitIndicator.hidden = true
+        waitIndicator.stopAnimating()
         self.addLeftBarButtonWithImage(UIImage(named: "img-menu")!)
     }
     
     //MARK: Load View
     func loadCreateUser() -> Void {
-        let userView = NSBundle.mainBundle().loadNibNamed("CreateUserInstructorView", owner: self, options: nil)[0] as! CreateUserInstructorView
+        let userView = NSBundle.mainBundle().loadNibNamed(createUserView, owner: self, options: nil)[0] as! CreateUserInstructorView
         userView.frame = maskView.bounds
         userView.username = username
         userView.phone = phone
@@ -117,7 +116,7 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     }
     
     func loadCreateClassRole() -> Void {
-        let classRoleView = NSBundle.mainBundle().loadNibNamed("CreateClassRoleView", owner: self, options: nil)[0] as! CreateClassRoleView
+        let classRoleView = NSBundle.mainBundle().loadNibNamed(createClassRoleView, owner: self, options: nil)[0] as! CreateClassRoleView
         classRoleView.frame = maskView.bounds
         addSubViewToSuperView(classRoleView)
     }
@@ -141,63 +140,17 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
     
     @IBAction func registerDidTapped(sender: UIButton) {
         if username.isEmpty || phone.isEmpty || classRoles.isEmpty {
-            let alert = UIAlertController(title: "Create Fail!", message: "Complete User and ClassRoles", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-            alert.addAction(okAction)
-            presentViewController(alert, animated: true, completion: nil)
+            showAlert("Create Fail!", message: "Complete User and ClassRoles", titleActions: ["OK"], actions: nil, complete: nil)
         } else {
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: "Complete User", object: nil)
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: "Complete ClassRoles", object: nil)
-            var clsRoles: [AnyObject] = []
-            for c in classRoles {
-                let clsRole = ["className": c.classCode, "role": c.roleCode]
-                clsRoles.append(clsRole)
-            }
+            waitIndicator.hidden = false
+            waitIndicator.startAnimating()
+            self.view.userInteractionEnabled = false
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: ObserverName.userObserver, object: nil)
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: ObserverName.classRoleObserver, object: nil)
             
-            let tempPath = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("avatar.png")
-            let dataImage = UIImagePNGRepresentation(avatarImageView.image!)
-            if dataImage?.writeToURL(tempPath, atomically: true) == true {
-                print("write to completed")
-            } else {
-                print("error")
-                return
-            }
+            writeImageToTemp()
             
-            let uploadRequest = AWSS3TransferManagerUploadRequest()
-            uploadRequest.body = tempPath
-            uploadRequest.key = NSProcessInfo.processInfo().globallyUniqueString + ".png"
-            uploadRequest.bucket = S3BuketName
-            uploadRequest.contentType = "image/png"
-            let transferManager = AWSS3TransferManager.S3TransferManagerForKey("USWest2S3TransferManager")
-            transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject! in
-                if let error = task.error {
-                    print("Upload failed ❌ (\(error))")
-                }
-                if let exception = task.exception {
-                    print("Upload failed ❌ (\(exception))")
-                }
-                if task.result != nil {
-                    self.imageURL = (NSURL(string: "http://s3-us-west-2.amazonaws.com/\(S3BuketName)/\(uploadRequest.key!)")!).absoluteString
-                    print("Uploaded to:\n\(self.imageURL)")
-                    
-                }
-                else {
-                    print("Unexpected empty result.")
-                }
-                return nil
-            }
-            if imageURL != "" {
-                let instructor = ["name":username, "phone": phone, "code": "TECH10", "imageURL": imageURL, "classRole": clsRoles]
-                Alamofire.request(.POST, urlProducts, parameters: instructor as? [String : AnyObject], encoding: .JSON).response(completionHandler: { (resquest, response, data, error) in
-                    if let error = error {
-                        print("error: \(error)")
-                        return
-                    }
-                    print("success")
-                    NetworkConfig.shareInstance.socketServerEvent("New instructor")
-                })
-            }
-            
+            uploadData()
         }
         
     }
@@ -225,27 +178,87 @@ class CreateInstructorViewController: UIViewController, UIImagePickerControllerD
         UIGraphicsEndImageContext()
         avatarImageView.image = watermarkImage
         if imagePicker.sourceType == .Camera {
-            //UIImageWriteToSavedPhotosAlbum(watermarkImage, nil, nil, nil)
-            let library = ALAssetsLibrary()
-            library.writeImageToSavedPhotosAlbum(watermarkImage.CGImage, orientation: ALAssetOrientation(rawValue: watermarkImage.imageOrientation.rawValue)!, completionBlock: { (url, error) in
-                if let error = error {
-                    print("error: \(error)")
-                    return
-                }
-                self.imagePath = url.absoluteString
-                print(self.imagePath)
-            })
-        } else if imagePicker.sourceType == .PhotoLibrary {
-            let library = ALAssetsLibrary()
-            library.writeImageToSavedPhotosAlbum(watermarkImage.CGImage, orientation: ALAssetOrientation(rawValue: watermarkImage.imageOrientation.rawValue)!, completionBlock: { (url, error) in
-                if let error = error {
-                    print("error: \(error)")
-                    return
-                }
-                self.imagePath = url.absoluteString
-                print(self.imagePath)
-            })
+            UIImageWriteToSavedPhotosAlbum(watermarkImage, nil, nil, nil)
         }
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func pathImage(imageName: String) -> NSURL {
+        return NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(imageName)
+    }
+    
+    func writeImageToTemp() -> Void {
+        let tempPath = pathImage("avatar\(username).jpeg")
+        let dataImage = UIImageJPEGRepresentation(avatarImageView.image!, 0.5)
+        if dataImage?.writeToURL(tempPath, atomically: true) == true {
+            print("write to completed")
+        } else {
+            print("error")
+            return
+        }
+    }
+    
+    func uploadData() -> Void {
+        var clsRoles: [AnyObject] = []
+        for c in classRoles {
+            let clsRole = [KeyJSON.className: c.classCode, KeyJSON.role: c.roleCode]
+            clsRoles.append(clsRole)
+        }
+        do {
+            reachability = try! Reachability.reachabilityForInternetConnection()
+        }
+        reachability?.whenReachable = {
+            reachability in
+            let uploadRequest = AWSS3TransferManagerUploadRequest()
+            uploadRequest.body = self.pathImage("avatar\(self.username).jpeg")
+            uploadRequest.key = NSProcessInfo.processInfo().globallyUniqueString + ".jpeg"
+            uploadRequest.bucket = S3BuketName
+            uploadRequest.contentType = "image/jpeg"
+            let transferManager = AWSS3TransferManager.S3TransferManagerForKey(key)
+            transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject! in
+                if let error = task.error {
+                    self.showAlert("Upload failed ❌", message: "\(error.description)", titleActions: ["OK"], actions: nil, complete: nil)
+                    print("Upload failed ❌ (\(error))")
+                    return nil
+                }
+                if let exception = task.exception {
+                    self.showAlert("Upload failed ❌", message: "\(exception.description)", titleActions: ["OK"], actions: nil, complete: nil)
+                    print("Upload failed ❌ (\(exception))")
+                    return nil
+                }
+                if task.result != nil {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.imageURL = (NSURL(string: urlS3 + "/\(S3BuketName)/\(uploadRequest.key!)")!).absoluteString
+                        print("Uploaded to:\n\(self.imageURL)")
+                        let instructor = [KeyJSON.name: self.username, KeyJSON.phone: self.phone, KeyJSON.code: "TECH10", KeyJSON.imageURL: self.imageURL, KeyJSON.classRole: clsRoles]
+                        Alamofire.request(.POST, urlProducts, parameters: instructor as? [String : AnyObject], encoding: .JSON).response(completionHandler: { (resquest, response, data, error) in
+                            if let error = error {
+                                self.showAlert("Error", message: "\(error.description)", titleActions: ["OK"], actions: nil, complete: nil)
+                                print("error: \(error)")
+                                return
+                            }
+                            print("success")
+                            NetworkConfig.shareInstance.socketServerEvent("New instructor \(self.username)")
+                            self.waitIndicator.stopAnimating()
+                            self.waitIndicator.hidden = true
+                            self.showAlert("Success!", message: "Create Completed", titleActions: ["OK"], actions: nil, complete: nil)
+                        })
+                    })
+                    
+                    
+                }
+                else {
+                    print("Unexpected empty result.")
+                }
+                return nil
+            }
+        }
+        reachability!.whenUnreachable = {
+            reachability in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.waitIndicator.stopAnimating()
+            })
+        }
+        try! reachability?.startNotifier()
     }
 }

@@ -160,7 +160,7 @@
                             <constraint firstItem="3Ps-GH-bxN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="3SG-3C-nvp"/>
                             <constraint firstItem="3Ps-GH-bxN" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="3wq-y4-NSF"/>
                             <constraint firstAttribute="trailing" secondItem="ArM-9E-Jlf" secondAttribute="trailing" constant="8" id="9Bd-ly-Oe0"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ArM-9E-Jlf" secondAttribute="bottom" constant="50" id="9CY-HD-DAO"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ArM-9E-Jlf" secondAttribute="bottom" constant="50" identifier="bottomLoginView" id="9CY-HD-DAO"/>
                             <constraint firstAttribute="trailing" secondItem="3Ps-GH-bxN" secondAttribute="trailing" id="9SV-ZH-4FG"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="3Ps-GH-bxN" secondAttribute="bottom" id="E3p-B0-oBF"/>
                             <constraint firstItem="Wpc-Bk-J8S" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.61" id="KfC-Ax-Lzx"/>
@@ -175,6 +175,7 @@
                     <connections>
                         <outlet property="iconImageView" destination="Wpc-Bk-J8S" id="BPz-4e-fT5"/>
                         <outlet property="loginButton" destination="iNC-4r-A5b" id="eG4-24-41Z"/>
+                        <outlet property="loginView" destination="ArM-9E-Jlf" id="KeV-EN-C9Q"/>
                         <outlet property="passwordTextField" destination="d4t-fy-i5T" id="beW-zB-8Ut"/>
                         <outlet property="usernameTextField" destination="dFa-FW-SpY" id="PHw-17-1Fb"/>
                     </connections>
@@ -586,11 +587,16 @@
                                     <action selector="registerDidTapped:" destination="nyB-Gj-Dqe" eventType="touchUpInside" id="6ib-LE-e9H"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="t0C-4M-dDt">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ffE-sb-4Il" firstAttribute="width" secondItem="SL1-2u-zBX" secondAttribute="width" multiplier="0.4" id="25d-j8-yAQ"/>
                             <constraint firstItem="tYh-kr-24c" firstAttribute="top" secondItem="mch-E8-Lhz" secondAttribute="bottom" id="5ld-Ii-ueL"/>
+                            <constraint firstItem="t0C-4M-dDt" firstAttribute="centerY" secondItem="SL1-2u-zBX" secondAttribute="centerY" id="6bI-Wo-UV8"/>
                             <constraint firstItem="qc4-wo-Mep" firstAttribute="width" secondItem="SL1-2u-zBX" secondAttribute="width" multiplier="0.3" id="EPY-Hq-iNm"/>
                             <constraint firstItem="nf5-va-GpL" firstAttribute="top" secondItem="tYh-kr-24c" secondAttribute="bottom" id="Je2-2E-hO7"/>
                             <constraint firstItem="ffE-sb-4Il" firstAttribute="top" secondItem="zlo-b2-19s" secondAttribute="bottom" constant="20" id="Ke6-uN-8Gn"/>
@@ -599,6 +605,7 @@
                             <constraint firstItem="tYh-kr-24c" firstAttribute="leading" secondItem="SL1-2u-zBX" secondAttribute="leading" id="ULD-3c-G5t"/>
                             <constraint firstItem="zlo-b2-19s" firstAttribute="top" secondItem="qc4-wo-Mep" secondAttribute="bottom" constant="-50" id="ZMX-e5-zaa"/>
                             <constraint firstItem="qc4-wo-Mep" firstAttribute="centerX" secondItem="SL1-2u-zBX" secondAttribute="centerX" id="Zsb-sh-01O"/>
+                            <constraint firstItem="t0C-4M-dDt" firstAttribute="centerX" secondItem="SL1-2u-zBX" secondAttribute="centerX" id="bN4-Hz-Lwg"/>
                             <constraint firstItem="zlo-b2-19s" firstAttribute="height" secondItem="SL1-2u-zBX" secondAttribute="height" multiplier="0.6" id="dZr-rW-1pT"/>
                             <constraint firstItem="nf5-va-GpL" firstAttribute="top" secondItem="ffE-sb-4Il" secondAttribute="bottom" constant="20" id="fOV-CJ-xfY"/>
                             <constraint firstItem="rD0-PL-0cg" firstAttribute="top" secondItem="qc4-wo-Mep" secondAttribute="bottom" id="iUe-0N-n4p"/>
@@ -613,6 +620,7 @@
                         <outlet property="classRoleButton" destination="kBL-sJ-bzv" id="Mda-wh-JKP"/>
                         <outlet property="maskView" destination="rD0-PL-0cg" id="lmK-Qh-uiE"/>
                         <outlet property="userButton" destination="jg5-Xc-478" id="Pg3-df-Orc"/>
+                        <outlet property="waitIndicator" destination="t0C-4M-dDt" id="T0y-Rm-9Ig"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iub-KF-gSY" userLabel="First Responder" sceneMemberID="firstResponder"/>

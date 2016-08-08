@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+let identifierMenu = "Cell"
 class LeftViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
     @IBOutlet weak var iconImageView: UIImageView!
@@ -48,7 +48,7 @@ class LeftViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MenuTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(identifierMenu, forIndexPath: indexPath) as! MenuTableViewCell
         let menuItem = menuItems[indexPath.row]
         cell.menuItem = menuItem
         return cell
@@ -59,7 +59,7 @@ class LeftViewController: UIViewController, UITableViewDelegate, UITableViewData
         if menuItem.idViewController == "" {
             let alert = UIAlertController(title: "Logout", message: "Do you want logout?", preferredStyle: .Alert)
             let yesAction = UIAlertAction(title: "YES", style: .Default, handler: { (action) in
-                let loginViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController")
+                let loginViewController = self.storyboard?.instantiateViewControllerWithIdentifier(loginVC)
                 self.presentViewController(loginViewController!, animated: true, completion: nil)
             })
             let noAction = UIAlertAction(title: "NO", style: .Cancel, handler: nil)

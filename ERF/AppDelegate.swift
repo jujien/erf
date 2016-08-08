@@ -8,6 +8,8 @@
 
 import UIKit
 import AWSS3
+
+let key = "USWest2S3TransferManager"
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -16,13 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-//        NetworkConfig.shareInstance.socketTakePush { (data) in
-//            print(data[0])
-//        }
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType:Region,identityPoolId:CognitoPoolID)
         let configuration = AWSServiceConfiguration(region:Region, credentialsProvider:credentialsProvider)
-        //AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
-        AWSS3TransferManager.registerS3TransferManagerWithConfiguration(configuration, forKey: "USWest2S3TransferManager")
+        AWSS3TransferManager.registerS3TransferManagerWithConfiguration(configuration, forKey: key)
         //self.registerForPushNotifications(application)
         self.window?.makeKeyAndVisible()
         self.customAppearance()

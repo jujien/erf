@@ -11,6 +11,8 @@ import RealmSwift
 import ReachabilitySwift
 import Alamofire
 
+let identifierSearchCell = "InstructorCell"
+
 class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var instructorCollectionView: UICollectionView!
@@ -40,17 +42,17 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         reachability!.whenReachable = {
             reachability in
             dispatch_async(dispatch_get_main_queue(), {
-                Alamofire.request(.GET, "https://dataforiliat.herokuapp.com/api/products").validate().responseJSON(completionHandler: { (response) in
+                Alamofire.request(.GET, urlProducts).validate().responseJSON(completionHandler: { (response) in
                     print(response.result.value)
                     if let json = response.result.value {
                         for object in json as! [AnyObject] {
                             let instructor = object as! [String: AnyObject]
                             let code = "TECH 10"
-                            let name = instructor["name"] as! String
-                            let phone = instructor["phone"] as! String
-                            let imageUrl = instructor["imageURL"] as! String
-                            let cls = (instructor["classRole"] as! [AnyObject])[0] as! [String: String]
-                            let classRole = ClassRole.create(cls["className"]!, roleCode: cls["role"]!)
+                            let name = instructor[KeyJSON.name] as! String
+                            let phone = instructor[KeyJSON.phone] as! String
+                            let imageUrl = instructor[KeyJSON.imageURL] as! String
+                            let cls = (instructor[KeyJSON.classRole] as! [AnyObject])[0] as! [String: String]
+                            let classRole = ClassRole.create(cls[KeyJSON.className]!, roleCode: cls[KeyJSON.role]!)
                             let classRoles = List<ClassRole>()
                             classRoles.append(classRole)
                             self.instructors.append(Instructor.create(imageUrl, name: name, code: code, phone: "\(phone)", classRoles: classRoles))
@@ -105,7 +107,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("InstructorCell", forIndexPath: indexPath) as! InstructorCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifierSearchCell , forIndexPath: indexPath) as! InstructorCollectionViewCell
         let instructor = instructors[indexPath.row]
         cell.instructor = instructor
         return cell
@@ -114,7 +116,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: UICollectionViewDelegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let instructor = instructors[indexPath.row]
-        let instructorDetail = self.storyboard?.instantiateViewControllerWithIdentifier("AddorUpdateTeachingRecordViewController") as! AddorUpdateTeachingRecordViewController
+        let instructorDetail = self.storyboard?.instantiateViewControllerWithIdentifier(addUpdateVC) as! AddorUpdateTeachingRecordViewController
         instructorDetail.instructor = instructor
         self.navigationController?.pushViewController(instructorDetail, animated: true)
     }

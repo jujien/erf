@@ -49,6 +49,10 @@
 		E15EBA361D50C1E700AFF80B /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15EBA351D50C1E700AFF80B /* NavigationController.swift */; };
 		E187CF011D4DF73800A5949C /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187CF001D4DF73800A5949C /* UIViewControllerExtension.swift */; };
 		E1E43A9D1D4EFCC70012BEA4 /* LazyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E43A9C1D4EFCC70012BEA4 /* LazyImage.swift */; };
+		E1F105DB1D58475C00393CE3 /* KeyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F105DA1D58475C00393CE3 /* KeyJSON.swift */; };
+		E1F105DD1D58496000393CE3 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F105DC1D58496000393CE3 /* URL.swift */; };
+		E1F105DF1D584AC800393CE3 /* IDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F105DE1D584AC800393CE3 /* IDViewController.swift */; };
+		E1F105E21D5856ED00393CE3 /* ObserverName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F105E11D5856ED00393CE3 /* ObserverName.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +102,10 @@
 		E15EBA351D50C1E700AFF80B /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		E187CF001D4DF73800A5949C /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		E1E43A9C1D4EFCC70012BEA4 /* LazyImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LazyImage.swift; sourceTree = "<group>"; };
+		E1F105DA1D58475C00393CE3 /* KeyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyJSON.swift; sourceTree = "<group>"; };
+		E1F105DC1D58496000393CE3 /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		E1F105DE1D584AC800393CE3 /* IDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDViewController.swift; sourceTree = "<group>"; };
+		E1F105E11D5856ED00393CE3 /* ObserverName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverName.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +149,7 @@
 				E14BDFB71D477A5000C92AD5 /* Assets.xcassets */,
 				E1F673321D4E72CD00FFC123 /* Networking */,
 				E14E825D1D49069B0017C9D5 /* Utils */,
+				E1F105E01D58569200393CE3 /* Constant */,
 				E14BDFBC1D477A5000C92AD5 /* Info.plist */,
 			);
 			path = ERF;
@@ -241,6 +250,17 @@
 				E15054BE1D4A22AF00907217 /* CreateClassRoleView.swift */,
 			);
 			name = "Create Controller";
+			sourceTree = "<group>";
+		};
+		E1F105E01D58569200393CE3 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				E1F105DA1D58475C00393CE3 /* KeyJSON.swift */,
+				E1F105DC1D58496000393CE3 /* URL.swift */,
+				E1F105DE1D584AC800393CE3 /* IDViewController.swift */,
+				E1F105E11D5856ED00393CE3 /* ObserverName.swift */,
+			);
+			name = Constant;
 			sourceTree = "<group>";
 		};
 		E1F673321D4E72CD00FFC123 /* Networking */ = {
@@ -409,12 +429,16 @@
 				BF210B8C1D4E2A4B00D55A77 /* NetworkConfig.swift in Sources */,
 				E14BDFD41D47CEEE00C92AD5 /* SearchViewController.swift in Sources */,
 				E14BDFC31D4789D000C92AD5 /* LeftViewController.swift in Sources */,
+				E1F105DB1D58475C00393CE3 /* KeyJSON.swift in Sources */,
+				E1F105E21D5856ED00393CE3 /* ObserverName.swift in Sources */,
 				E14E82501D48D2FC0017C9D5 /* InstructorCollectionViewCell.swift in Sources */,
 				E14E82561D4902B70017C9D5 /* ClassRole.swift in Sources */,
+				E1F105DD1D58496000393CE3 /* URL.swift in Sources */,
 				E14E826A1D49132F0017C9D5 /* ClassTableViewCell.swift in Sources */,
 				E14E826F1D491BFE0017C9D5 /* InstructorDetailView.swift in Sources */,
 				E14E82711D491FA10017C9D5 /* UIIViewExtensions.swift in Sources */,
 				E14E825A1D4904B40017C9D5 /* TeachingRecord.swift in Sources */,
+				E1F105DF1D584AC800393CE3 /* IDViewController.swift in Sources */,
 				E187CF011D4DF73800A5949C /* UIViewControllerExtension.swift in Sources */,
 				E14E825C1D4905D20017C9D5 /* TeachingRecordGroup.swift in Sources */,
 				E14BDFCA1D47ACF800C92AD5 /* MenuTableViewCell.swift in Sources */,

@@ -11,6 +11,7 @@ import SlideMenuControllerSwift
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -20,16 +21,25 @@ class LoginViewController: UIViewController {
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showKeyboard), name: UIKeyboardWillShowNotification, object: nil)
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupUI()
     }
     
+    @objc
+    func showKeyboard(notification: NSNotification) {
+//        loginView.layoutIfNeeded()
+//        loginView.frame = CGRectMake(loginView.frame.origin.x, loginView.frame.origin.y - 100, loginView.frame.size.width, loginView.frame.size.height)
+    }
 
     func setupUI() -> Void {
         iconImageView.layer.cornerRadius = iconImageView.frame.height / 2.0
@@ -42,15 +52,12 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginDidTapped(sender: UIButton) {
         if usernameTextField.text == "admin" && passwordTextField.text == "admin" {
-            let leftViewController = self.storyboard!.instantiateViewControllerWithIdentifier("LeftViewController")
-            let searchNavigationController = self.storyboard!.instantiateViewControllerWithIdentifier("NavigationSearch") as!UINavigationController
+            let leftViewController = self.storyboard!.instantiateViewControllerWithIdentifier(leftMenu)
+            let searchNavigationController = self.storyboard!.instantiateViewControllerWithIdentifier(naviSearchVC) as! NavigationController
             let slideViewController = SlideMenuController(mainViewController: searchNavigationController, leftMenuViewController: leftViewController)
             self.view.window?.rootViewController = slideViewController
         } else {
-            let alert = UIAlertController(title: "Login Failed", message: "Please check your Username or Password", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-            alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            showAlert("Login Failed", message: "Please check your Username or Password", titleActions: ["OK"], actions: nil, complete: nil)
         }
     }
     

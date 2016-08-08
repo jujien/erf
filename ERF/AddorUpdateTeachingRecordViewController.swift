@@ -38,7 +38,7 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
             self.view.removeGestureRecognizer(recognizer)
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(selector), name: "Selector", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(selector), name: ObserverName.selector, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -58,16 +58,16 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
     func nextStep() -> Void {
         if classSelected != "" {
             loadRole()
-            NSNotificationCenter.defaultCenter().postNotificationName("Selected", object: nil, userInfo: ["Selected": "class", "classSelected": classSelected])
+            NSNotificationCenter.defaultCenter().postNotificationName(ObserverName.selected, object: nil, userInfo: [ObserverName.selected: ObserverName.cls, ObserverName.classSelected: classSelected])
         }
         
         if roleSelected != "" {
             loadCalendar()
-            NSNotificationCenter.defaultCenter().postNotificationName("Selected", object: nil, userInfo: ["Selected": "role", "roleSelected": roleSelected])
+            NSNotificationCenter.defaultCenter().postNotificationName(ObserverName.selected, object: nil, userInfo: [ObserverName.selected: ObserverName.role, ObserverName.roleSelected: roleSelected])
         }
         
         if timeSelected != "" {
-            NSNotificationCenter.defaultCenter().postNotificationName("Selected", object: nil, userInfo: ["Selected": "time", "timeSelected": timeSelected])
+            NSNotificationCenter.defaultCenter().postNotificationName(ObserverName.selected, object: nil, userInfo: [ObserverName.selected: ObserverName.time, ObserverName.timeSelected: timeSelected])
         }
         
         if submitSelected != "" {
@@ -76,7 +76,7 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
     }
     
     func chooseStep() -> Void {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didTapped), name: "DidTapped", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didTapped), name: ObserverName.didTapped, object: nil)
     }
     
     
@@ -84,15 +84,15 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
     @objc
     func selector(notification: NSNotification) -> Void {
         let dict = notification.userInfo as! [String: String]
-        if dict["Selected"] == "class" {
-            classSelected = dict["classSelected"]!
+        if dict[ObserverName.selected] == ObserverName.cls {
+            classSelected = dict[ObserverName.classSelected]!
             nextStep()
-        } else if dict["Selected"] == "role" {
-            roleSelected = dict["roleSelected"]!
+        } else if dict[ObserverName.selected] == ObserverName.role {
+            roleSelected = dict[ObserverName.roleSelected]!
             nextStep()
-        } else if dict["Selected"] == "date" {
-            timeSelected = dict["time"]!
-            submitSelected = dict["submitFlag"]!
+        } else if dict[ObserverName.selected] == ObserverName.time {
+            timeSelected = dict[ObserverName.time]!
+            submitSelected = dict[ObserverName.submitFlag]!
             nextStep()
         }
         
@@ -101,11 +101,11 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
     @objc
     func didTapped (notification: NSNotification) {
         let dict = notification.userInfo as! [String: String]
-        if dict["DidTapped"] == "class" {
+        if dict[ObserverName.didTapped] == ObserverName.cls {
             loadClass()
-        } else if dict["DidTapped"] == "role" {
+        } else if dict[ObserverName.didTapped] == ObserverName.role {
             loadRole()
-        } else if dict["DidTapped"] == "date" {
+        } else if dict[ObserverName.didTapped] == ObserverName.time {
             loadCalendar()
         }
         
@@ -114,14 +114,14 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
     
     //MARK: loadView
     func loadDetail() -> Void {
-        let viewInfo = NSBundle.mainBundle().loadNibNamed("InstructorInfoView", owner: self, options: nil)[0] as! InstructorDetailView
+        let viewInfo = NSBundle.mainBundle().loadNibNamed(intructorView, owner: self, options: nil)[0] as! InstructorDetailView
         viewInfo.frame = instructorView.bounds
         viewInfo.instructor = instructor
         instructorView.addSubview(viewInfo)
     }
     
     func loadClass() -> Void {
-        let viewClass = NSBundle.mainBundle().loadNibNamed("ClassSelectorView", owner: self, options: nil)[0] as! ClassSelectorView
+        let viewClass = NSBundle.mainBundle().loadNibNamed(classview, owner: self, options: nil)[0] as! ClassSelectorView
         viewClass.instructor = instructor
         viewClass.frame = maskView.bounds
         viewClass.classSelected = classSelected
@@ -129,7 +129,7 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
     }
     
     func loadRole() -> Void {
-        let roleView = NSBundle.mainBundle().loadNibNamed("RoleSelectorView", owner: self, options: nil)[0] as! RoleSelectorView
+        let roleView = NSBundle.mainBundle().loadNibNamed(roleview, owner: self, options: nil)[0] as! RoleSelectorView
         roleView.roleData = (instructor?.roleInClass(classSelected))!
         roleView.frame = maskView.bounds
         roleView.roleSelected = roleSelected
@@ -137,7 +137,7 @@ class AddorUpdateTeachingRecordViewController: UIViewController {
     }
     
     func loadCalendar() -> Void {
-        let calendarView = NSBundle.mainBundle().loadNibNamed("CalendarSelectorView", owner: self, options: nil)[0] as! DateSelectorView
+        let calendarView = NSBundle.mainBundle().loadNibNamed(calendarview, owner: self, options: nil)[0] as! DateSelectorView
         calendarView.frame = maskView.bounds
         calendarView.time = timeSelected
         calendarView.submitFlag = submitSelected
